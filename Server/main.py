@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 
 app = FastAPI()
 
-
 SECRET_KEY = "B&w1X9+)NiJaQ3Cbe&1f4x*Ey==,DFy*V=gKbaXmMvawR967&.*XpAS%cTzKmM:R%9P5i9VX2Lv7_%)6*0pN]1x/$G=ng@_!&hJWKa(?*V[Byb?cZX/$uKatyqRWWdZr"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 24 * 365 * 10

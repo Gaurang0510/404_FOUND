@@ -1,2 +1,16 @@
+venv/
+.env/
+.venv/
 Server/venv/
-Server/__pycache__/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+Thumbs.db
+*.log
+
+.vscode/
+.idea/
+
+.env
