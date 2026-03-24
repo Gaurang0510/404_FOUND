@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaints - HostelSync Warden Portal</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="complaints">
+  <!-- Sidebar -->
+  <div id="sidebar-container"></div>
+
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Main Content -->
+  <main>
+    <div class="page-content">
+      <!-- Page Header -->
+      <div class="flex justify-between items-end mb-8">
+        <div>
+          <h1 class="mb-2">Complaints Management</h1>
+          <p class="text-muted">Track and resolve student complaints.</p>
+        </div>
+        <button class="btn btn-primary" id="createComplaintBtn">
+          <span class="material-symbols-outlined">add</span>
+          New Complaint
+        </button>
+      </div>
+
+      <!-- Filters -->
+      <div class="card mb-6">
+        <div class="grid grid-cols-4 gap-4">
+          <div class="form-group">
+            <label for="filterStatus">Status</label>
+            <select id="filterStatus" class="form-control">
+              <option value="">All</option>
+              <option value="open">Open</option>
+              <option value="in-progress">In Progress</option>
+              <option value="resolved">Resolved</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="filterCategory">Category</label>
+            <select id="filterCategory" class="form-control">
+              <option value="">All</option>
+              <option value="maintenance">Maintenance</option>
+              <option value="cleanliness">Cleanliness</option>
+              <option value="harassment">Harassment</option>
+              <option value="facilities">Facilities</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="filterBlock">Block</label>
+            <select id="filterBlock" class="form-control">
+              <option value="">All</option>
+              <option value="A">Block A</option>
+              <option value="B">Block B</option>
+            </select>
+          </div>
+          <div class="form-group flex items-end">
+            <button class="btn btn-secondary w-full" id="applyFiltersBtn">
+              <span class="material-symbols-outlined">search</span>
+              Apply
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Complaints Table -->
+      <div class="card">
+        <h3 class="mb-4">All Complaints</h3>
+        <div class="overflow-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Complainant</th>
+                <th>Category</th>
+                <th>Block/Room</th>
+                <th>Issue</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="complaintsList">
+              <tr>
+                <td colspan="7" class="text-center text-muted">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Load Components -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sidebarRes = await fetch('components/sidebar.html');
+        document.getElementById('sidebar-container').innerHTML = await sidebarRes.text();
+        
+        const navbarRes = await fetch('components/navbar.html');
+        document.getElementById('navbar-container').innerHTML = await navbarRes.text();
+
+        setTimeout(() => {
+          const link = document.querySelector('[data-page="complaints"]');
+          if (link) link.classList.add('active');
+        }, 100);
+      } catch (error) {
+        console.error('Error loading components:', error);
+      }
+    });
+  </script>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/complaints.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!-- Navbar Component -->
+<header class="navbar">
+  <div class="navbar__breadcrumb" id="navBreadcrumb">
+    Dashboard / Home
+  </div>
+
+  <div class="navbar__actions">
+    <div class="navbar__buttons">
+      <button class="navbar__btn-icon" title="Notifications">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+      <button class="navbar__btn-icon" title="Calendar">
+        <span class="material-symbols-outlined">calendar_today</span>
+      </button>
+      <button class="navbar__btn-icon" title="Schedule">
+        <span class="material-symbols-outlined">schedule</span>
+      </button>
+    </div>
+
+    <div class="navbar__profile">
+      <div class="navbar__profile-text">
+        <p class="name" id="wardenName">Dr. Robert Chen</p>
+        <p class="role">Chief Warden</p>
+      </div>
+      <img
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBx4WzLwZYQO65lwd1M7EiafLRRiyCXA63QepyvP6ut-AUlOiYz8ZL-CAINEdo-dX3iH-oDp425-V8FuUpztt0na1YNDshL6rJUIYLwJVjMCH6tpmyfXuHNoN28Y6X2hET5P4XW1qY4saL20qqJKP8xcvYORrsDhnZrqCpv2ZVlU-ZKoYJjnxDXa48wjdL7NIuxKPwiZSoGFa6UAR-ZW_kK-OxNkROfZF5jqC22lzCGn8NIPrvh6IQ4fA9qXZqPpSr7R_IpNq1SSY"
+        class="navbar__profile-avatar"
+        alt="Warden Profile"
+      />
+    </div>
+  </div>
+</header>
+
+<script>
+  // Update navbar based on current page
+  document.addEventListener('DOMContentLoaded', () => {
+    const currentPage = document.body.getAttribute('data-page');
+    const breadcrumb = document.getElementById('navBreadcrumb');
+    
+    const breadcrumbMap = {
+      'dashboard': 'Dashboard / Home',
+      'requests': 'Gate Pass Requests / Overview',
+      'leave': 'Leave Requests / Overview',
+      'complaints': 'Complaints / Management',
+      'visitors': 'Visitors / Management',
+      'attendance': 'Attendance / Tracking',
+      'voting': 'Mess Voting / Results',
+      'students': 'Students / Directory',
+      'notifications': 'Notifications / Alerts',
+      'profile': 'Profile / Settings'
+    };
+    
+    if (breadcrumb && breadcrumbMap[currentPage]) {
+      breadcrumb.textContent = breadcrumbMap[currentPage];
+    }
+
+    // Load warden name from localStorage or API
+    const wardenName = document.getElementById('wardenName');
+    if (wardenName) {
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      if (userData.name) {
+        wardenName.textContent = userData.name;
+      }
+    }
+  });
+</script>

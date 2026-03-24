@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications - HostelSync Warden Portal</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="notifications">
+  <div id="sidebar-container"></div>
+  <div id="navbar-container"></div>
+
+  <main>
+    <div class="page-content">
+      <div class="flex justify-between items-end mb-8">
+        <div>
+          <h1 class="mb-2">Notifications</h1>
+          <p class="text-muted">View all system notifications and alerts.</p>
+        </div>
+        <button class="btn btn-secondary" id="markAllRead">
+          <span class="material-symbols-outlined">done_all</span>
+          Mark All Read
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="flex justify-between items-center mb-6">
+          <h3>All Notifications</h3>
+          <div class="flex gap-2">
+            <button class="btn btn-outline btn-sm" data-filter="all">All</button>
+            <button class="btn btn-outline btn-sm" data-filter="unread">Unread</button>
+            <button class="btn btn-outline btn-sm" data-filter="read">Read</button>
+          </div>
+        </div>
+
+        <div class="space-y-3" id="notificationsList">
+          <div class="p-4 bg-surface-container rounded-lg flex justify-between items-start">
+            <div>
+              <p class="font-bold mb-1">Sample Notification</p>
+              <p class="text-muted text-sm">This is a notification message</p>
+              <p class="text-on-surface-variant text-xs mt-2">Just now</p>
+            </div>
+            <span class="badge badge-info">New</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sidebarRes = await fetch('components/sidebar.html');
+        document.getElementById('sidebar-container').innerHTML = await sidebarRes.text();
+        
+        const navbarRes = await fetch('components/navbar.html');
+        document.getElementById('navbar-container').innerHTML = await navbarRes.text();
+
+        setTimeout(() => {
+          const link = document.querySelector('[data-page="notifications"]');
+          if (link) link.classList.add('active');
+        }, 100);
+      } catch (error) {
+        console.error('Error loading components:', error);
+      }
+    });
+  </script>
+
+  <script src="assets/js/api_service.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const mockNotifications = [
+          { id: 1, title: 'New Gate Pass Request', message: 'Rajesh Kumar has applied for a gate pass', timestamp: 'Just now', unread: true },
+          { id: 2, title: 'Complaint Resolved', message: 'The maintenance issue in A-105 has been resolved', timestamp: '2 hours ago', unread: false },
+          { id: 3, title: 'Low Attendance Alert', message: 'Attendance is below 80% for Block B', timestamp: '1 day ago', unread: false }
+        ];
+
+        const container = document.getElementById('notificationsList');
+        if (container) {
+          container.innerHTML = mockNotifications.map(notif => `
+            <div class="p-4 bg-surface-container rounded-lg flex justify-between items-start">
+              <div>
+                <p class="font-bold mb-1">${notif.title}</p>
+                <p class="text-muted text-sm">${notif.message}</p>
+                <p class="text-on-surface-variant text-xs mt-2">${notif.timestamp}</p>
+              </div>
+              <span class="badge ${notif.unread ? 'badge-info' : 'badge-success'}">${notif.unread ? 'New' : 'Read'}</span>
+            </div>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Error loading notifications:', error);
+      }
+    });
+  </script>
+</html>

@@ -1,0 +1,88 @@
+<!-- Sidebar Navigation Component -->
+<aside class="sidebar">
+  <div class="sidebar__header">
+    <div class="sidebar__logo-icon">
+      <span class="material-symbols-outlined">domain</span>
+    </div>
+    <div class="sidebar__logo-text">
+      <h1>HostelSync</h1>
+      <p>Warden Portal</p>
+    </div>
+  </div>
+
+  <nav class="sidebar__nav" id="mainNav">
+    <a href="dashboard.html" data-page="dashboard">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Dashboard</span>
+    </a>
+    <a href="requests.html" data-page="requests">
+      <span class="material-symbols-outlined">event_available</span>
+      <span>Gate Pass Requests</span>
+    </a>
+    <a href="leave.html" data-page="leave">
+      <span class="material-symbols-outlined">exit_to_app</span>
+      <span>Leave Requests</span>
+    </a>
+    <a href="complaints.html" data-page="complaints">
+      <span class="material-symbols-outlined">report_problem</span>
+      <span>Complaints</span>
+    </a>
+    <a href="visitors.html" data-page="visitors">
+      <span class="material-symbols-outlined">group_add</span>
+      <span>Visitors</span>
+    </a>
+    <a href="attendance.html" data-page="attendance">
+      <span class="material-symbols-outlined">fact_check</span>
+      <span>Attendance</span>
+    </a>
+    <a href="voting.html" data-page="voting">
+      <span class="material-symbols-outlined">how_to_vote</span>
+      <span>Mess Voting</span>
+    </a>
+    <a href="students.html" data-page="students">
+      <span class="material-symbols-outlined">person_search</span>
+      <span>Students</span>
+    </a>
+    <a href="notifications.html" data-page="notifications">
+      <span class="material-symbols-outlined">notifications</span>
+      <span>Notifications</span>
+    </a>
+  </nav>
+
+  <div class="sidebar__logout">
+    <a href="#" id="logoutBtn">
+      <span class="material-symbols-outlined">logout</span>
+      <span>Logout</span>
+    </a>
+  </div>
+</aside>
+
+<script>
+  // Set active sidebar item based on current page
+  document.addEventListener('DOMContentLoaded', () => {
+    const currentPage = document.body.getAttribute('data-page');
+    if (currentPage) {
+      document.querySelectorAll('.sidebar__nav a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-page') === currentPage) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Logout handler
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (typeof APIService !== 'undefined') {
+          APIService.logoutAPI();
+        } else {
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('userData');
+          window.location.href = 'index.html';
+        }
+      });
+    }
+  });
+</script>

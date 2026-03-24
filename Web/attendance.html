@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance - HostelSync Warden Portal</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="attendance">
+  <div id="sidebar-container"></div>
+  <div id="navbar-container"></div>
+
+  <main>
+    <div class="page-content">
+      <div class="flex justify-between items-end mb-8">
+        <div>
+          <h1 class="mb-2">Attendance Tracking</h1>
+          <p class="text-muted">Monitor hostel attendance.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6 mb-8">
+        <div class="card">
+          <p class="text-muted mb-2">Total Students</p>
+          <h3 id="totalStudents">0</h3>
+        </div>
+        <div class="card">
+          <p class="text-muted mb-2">Present Today</p>
+          <h3 id="presentToday">0</h3>
+        </div>
+        <div class="card">
+          <p class="text-muted mb-2">Absent Today</p>
+          <h3 id="absentToday">0</h3>
+        </div>
+      </div>
+
+      <div class="card mb-6">
+        <div class="grid grid-cols-4 gap-4">
+          <div class="form-group">
+            <label>Block</label>
+            <select class="form-control">
+              <option>All</option>
+              <option>Block A</option>
+              <option>Block B</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select class="form-control">
+              <option>All</option>
+              <option>Present</option>
+              <option>Absent</option>
+              <option>Leave</option>
+            </select>
+          </div>
+          <div class="form-group flex items-end">
+            <button class="btn btn-secondary w-full">Apply</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="mb-4">Attendance Records</h3>
+        <div class="overflow-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Roll Number</th>
+                <th>Block/Room</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceTable">
+              <tr>
+                <td colspan="5" class="text-center text-muted">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sidebarRes = await fetch('components/sidebar.html');
+        document.getElementById('sidebar-container').innerHTML = await sidebarRes.text();
+        
+        const navbarRes = await fetch('components/navbar.html');
+        document.getElementById('navbar-container').innerHTML = await navbarRes.text();
+
+        setTimeout(() => {
+          const link = document.querySelector('[data-page="attendance"]');
+          if (link) link.classList.add('active');
+        }, 100);
+      } catch (error) {
+        console.error('Error loading components:', error);
+      }
+    });
+  </script>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/attendance.js"></script>
+</body>
+</html>

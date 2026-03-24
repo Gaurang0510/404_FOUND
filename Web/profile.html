@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - HostelSync Warden Portal</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="profile">
+  <div id="sidebar-container"></div>
+  <div id="navbar-container"></div>
+
+  <main>
+    <div class="page-content">
+      <h1 class="mb-8">Profile & Settings</h1>
+
+      <!-- Profile Card -->
+      <div class="card mb-6">
+        <h3 class="mb-6">Warden Profile</h3>
+        
+        <div class="grid grid-cols-2 gap-8">
+          <div class="flex items-center gap-6">
+            <img 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBx4WzLwZYQO65lwd1M7EiafLRRiyCXA63QepyvP6ut-AUlOiYz8ZL-CAINEdo-dX3iH-oDp425-V8FuUpztt0na1YNDshL6rJUIYLwJVjMCH6tpmyfXuHNoN28Y6X2hET5P4XW1qY4saL20qqJKP8xcvYORrsDhnZrqCpv2ZVlU-ZKoYJjnxDXa48wjdL7NIuxKPwiZSoGFa6UAR-ZW_kK-OxNkROfZF5jqC22lzCGn8NIPrvh6IQ4fA9qXZqPpSr7R_IpNq1SSY"
+              alt="Profile"
+              class="w-24 h-24 rounded-full border-4 border-primary"
+            >
+            <div>
+              <h4>Dr. Robert Chen</h4>
+              <p class="text-muted">Chief Warden</p>
+              <p class="text-sm text-on-surface-variant mt-2">Block A & B Administrator</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Profile -->
+      <div class="card mb-6">
+        <h3 class="mb-6">Edit Profile</h3>
+        
+        <form class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" class="form-control" value="Dr. Robert Chen">
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" class="form-control" value="robert@hostel.edu">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" class="form-control" value="+91 XX XX XX XXXX">
+            </div>
+            <div class="form-group">
+              <label for="block">Block Assigned</label>
+              <input type="text" id="block" class="form-control" value="Block A & B" disabled>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="bio">Bio</label>
+            <textarea id="bio" class="form-control">Experienced hostel administrator with 10+ years of service</textarea>
+          </div>
+
+          <div class="flex gap-3">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="button" class="btn btn-outline">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Change Password -->
+      <div class="card mb-6">
+        <h3 class="mb-6">Change Password</h3>
+        
+        <form class="space-y-4" style="max-width: 400px;">
+          <div class="form-group">
+            <label for="currentPassword">Current Password</label>
+            <input type="password" id="currentPassword" class="form-control" placeholder="••••••••">
+          </div>
+
+          <div class="form-group">
+            <label for="newPassword">New Password</label>
+            <input type="password" id="newPassword" class="form-control" placeholder="••••••••">
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" class="form-control" placeholder="••••••••">
+          </div>
+
+          <div class="flex gap-3">
+            <button type="submit" class="btn btn-primary">Update Password</button>
+            <button type="button" class="btn btn-outline">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Preferences -->
+      <div class="card">
+        <h3 class="mb-6">Preferences</h3>
+        
+        <div class="space-y-4">
+          <div class="flex justify-between items-center p-4 bg-surface-container rounded-lg">
+            <div>
+              <p class="font-bold">Email Notifications</p>
+              <p class="text-muted text-sm">Receive email alerts for urgent issues</p>
+            </div>
+            <input type="checkbox" checked style="width: 20px; height: 20px; cursor: pointer;">
+          </div>
+
+          <div class="flex justify-between items-center p-4 bg-surface-container rounded-lg">
+            <div>
+              <p class="font-bold">SMS Notifications</p>
+              <p class="text-muted text-sm">Receive SMS for critical alerts</p>
+            </div>
+            <input type="checkbox" checked style="width: 20px; height: 20px; cursor: pointer;">
+          </div>
+
+          <div class="flex justify-between items-center p-4 bg-surface-container rounded-lg">
+            <div>
+              <p class="font-bold">Daily Summary Report</p>
+              <p class="text-muted text-sm">Get daily summary at 8:00 AM</p>
+            </div>
+            <input type="checkbox" style="width: 20px; height: 20px; cursor: pointer;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sidebarRes = await fetch('components/sidebar.html');
+        document.getElementById('sidebar-container').innerHTML = await sidebarRes.text();
+        
+        const navbarRes = await fetch('components/navbar.html');
+        document.getElementById('navbar-container').innerHTML = await navbarRes.text();
+
+        setTimeout(() => {
+          const link = document.querySelector('[data-page="profile"]');
+          if (link) link.classList.add('active');
+        }, 100);
+      } catch (error) {
+        console.error('Error loading components:', error);
+      }
+    });
+  </script>
+
+  <script src="assets/js/api_service.js"></script>
+</body>
+</html>

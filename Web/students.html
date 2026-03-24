@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students - HostelSync Warden Portal</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="students">
+  <div id="sidebar-container"></div>
+  <div id="navbar-container"></div>
+
+  <main>
+    <div class="page-content">
+      <div class="flex justify-between items-end mb-8">
+        <div>
+          <h1 class="mb-2">Students Directory</h1>
+          <p class="text-muted">Manage and view all hostel students.</p>
+        </div>
+      </div>
+
+      <div class="card mb-6">
+        <div class="grid grid-cols-4 gap-4">
+          <div class="form-group">
+            <label>Block</label>
+            <select class="form-control">
+              <option>All</option>
+              <option>Block A</option>
+              <option>Block B</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Year</label>
+            <select class="form-control">
+              <option>All</option>
+              <option>1st Year</option>
+              <option>2nd Year</option>
+              <option>3rd Year</option>
+              <option>4th Year</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Search</label>
+            <input type="text" class="form-control" placeholder="Name, Roll No...">
+          </div>
+          <div class="form-group flex items-end">
+            <button class="btn btn-secondary w-full">Apply</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="mb-4">All Students</h3>
+        <div class="overflow-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Roll Number</th>
+                <th>Block/Room</th>
+                <th>Year</th>
+                <th>Mobile</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="studentsList">
+              <tr>
+                <td colspan="7" class="text-center text-muted">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sidebarRes = await fetch('components/sidebar.html');
+        document.getElementById('sidebar-container').innerHTML = await sidebarRes.text();
+        
+        const navbarRes = await fetch('components/navbar.html');
+        document.getElementById('navbar-container').innerHTML = await navbarRes.text();
+
+        setTimeout(() => {
+          const link = document.querySelector('[data-page="students"]');
+          if (link) link.classList.add('active');
+        }, 100);
+      } catch (error) {
+        console.error('Error loading components:', error);
+      }
+    });
+  </script>
+
+  <script src="assets/js/api_service.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const mockData = [
+          { name: 'Rajesh Kumar', roll: 'CS001', block: 'A-101', year: '3rd', mobile: '98765-43210', status: 'Active' },
+          { name: 'Priya Sharma', roll: 'CS002', block: 'A-102', year: '2nd', mobile: '98765-43211', status: 'Active' },
+          { name: 'Ashish Singh', roll: 'CS003', block: 'B-201', year: '3rd', mobile: '98765-43212', status: 'Active' }
+        ];
+
+        const table = document.getElementById('studentsList');
+        if (table) {
+          table.innerHTML = mockData.map(student => `
+            <tr>
+              <td>${student.name}</td>
+              <td>${student.roll}</td>
+              <td>${student.block}</td>
+              <td>${student.year}</td>
+              <td>${student.mobile}</td>
+              <td><span class="badge badge-success">${student.status}</span></td>
+              <td>
+                <button class="btn btn-primary btn-sm">View</button>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Error loading students:', error);
+      }
+    });
+  </script>
+</html>

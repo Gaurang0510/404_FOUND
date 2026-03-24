@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gate Pass Requests - HostelSync Warden Portal</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="requests">
+  <!-- Sidebar -->
+  <div id="sidebar-container"></div>
+
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Main Content -->
+  <main>
+    <div class="page-content">
+      <!-- Page Header -->
+      <div class="flex justify-between items-end mb-8">
+        <div>
+          <h1 class="mb-2">Gate Pass Requests</h1>
+          <p class="text-muted">Manage and approve student gate pass requests.</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-primary" id="createRequestBtn">
+            <span class="material-symbols-outlined">add</span>
+            New Request
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="card mb-6">
+        <div class="grid grid-cols-4 gap-4">
+          <div class="form-group">
+            <label for="filterStatus">Status</label>
+            <select id="filterStatus" class="form-control">
+              <option value="">All</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="filterDate">Date</label>
+            <input type="date" id="filterDate" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="filterStudent">Student</label>
+            <input type="text" id="filterStudent" class="form-control" placeholder="Search by name...">
+          </div>
+          <div class="form-group flex items-end">
+            <button class="btn btn-secondary w-full" id="applyFiltersBtn">
+              <span class="material-symbols-outlined">search</span>
+              Apply Filters
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Requests Table -->
+      <div class="card">
+        <h3 class="mb-4">All Requests</h3>
+        <div class="overflow-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Destination</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Submitted</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="requestsTable">
+              <tr>
+                <td colspan="6" class="text-center text-muted">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="flex justify-center mt-6 gap-2" id="paginationContainer"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Request Modal -->
+  <div id="requestModal" class="hidden" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); display: none; align-items: center; justify-content: center; z-index: 100;">
+    <div class="card" style="max-width: 500px; width: 90%;">
+      <div class="flex justify-between items-center mb-4">
+        <h2>Gate Pass Request Details</h2>
+        <button class="btn btn-secondary btn-sm" id="closeModalBtn">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div id="modalContent" class="space-y-4 mb-6">
+        <p class="text-muted">Loading...</p>
+      </div>
+
+      <div class="flex gap-3">
+        <button class="btn btn-primary flex-1" id="approveBtn">
+          <span class="material-symbols-outlined">check_circle</span>
+          Approve
+        </button>
+        <button class="btn btn-danger flex-1" id="rejectBtn">
+          <span class="material-symbols-outlined">cancel</span>
+          Reject
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load Components -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sidebarRes = await fetch('components/sidebar.html');
+        document.getElementById('sidebar-container').innerHTML = await sidebarRes.text();
+        
+        const navbarRes = await fetch('components/navbar.html');
+        document.getElementById('navbar-container').innerHTML = await navbarRes.text();
+
+        setTimeout(() => {
+          const link = document.querySelector('[data-page="requests"]');
+          if (link) link.classList.add('active');
+        }, 100);
+      } catch (error) {
+        console.error('Error loading components:', error);
+      }
+    });
+  </script>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/requests.js"></script>
+</body>
+</html>

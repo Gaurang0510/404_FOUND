@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - HostelSync Warden Portal</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="dashboard">
+  <!-- Sidebar -->
+  <div id="sidebar-container"></div>
+
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Main Content -->
+  <main>
+    <div class="page-content">
+      <!-- Page Header -->
+      <div class="flex justify-between items-end mb-10">
+        <div>
+          <h1 class="mb-2">Hostel Insight</h1>
+          <p class="text-muted">Real-time occupancy and request oversight for Block A & B.</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-secondary">
+            <span class="material-symbols-outlined">filter_list</span>
+            Generate Report
+          </button>
+          <button class="btn btn-primary">
+            <span class="material-symbols-outlined">add</span>
+            Quick Action
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary Cards Grid -->
+      <div class="grid grid-cols-auto mb-8">
+        <!-- Total Students -->
+        <div class="card">
+          <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-blue-500/20 rounded-lg">
+              <span class="material-symbols-outlined" style="color: #adc6ff;">school</span>
+            </div>
+          </div>
+          <div>
+            <p class="text-muted mb-1">Total Students</p>
+            <h3 id="totalStudents">0</h3>
+            <p class="text-muted text-sm mt-2">Active in hostel</p>
+          </div>
+        </div>
+
+        <!-- Pending Requests -->
+        <div class="card">
+          <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-yellow-500/20 rounded-lg">
+              <span class="material-symbols-outlined" style="color: #e3c193;">pending_actions</span>
+            </div>
+          </div>
+          <div>
+            <p class="text-muted mb-1">Pending Requests</p>
+            <h3 id="pendingRequests">0</h3>
+            <p class="text-muted text-sm mt-2">Gate & Leave requests</p>
+          </div>
+        </div>
+
+        <!-- Active Visitors -->
+        <div class="card">
+          <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-green-500/20 rounded-lg">
+              <span class="material-symbols-outlined" style="color: #2dd882;">group</span>
+            </div>
+          </div>
+          <div>
+            <p class="text-muted mb-1">Active Visitors</p>
+            <h3 id="activeVisitors">0</h3>
+            <p class="text-muted text-sm mt-2">Currently in hostel</p>
+          </div>
+        </div>
+
+        <!-- Unresolved Complaints -->
+        <div class="card">
+          <div class="flex justify-between items-start mb-4">
+            <div class="p-2 bg-red-500/20 rounded-lg">
+              <span class="material-symbols-outlined" style="color: #ffb4ab;">warning</span>
+            </div>
+          </div>
+          <div>
+            <p class="text-muted mb-1">Unresolved Complaints</p>
+            <h3 id="unresolvedComplaints">0</h3>
+            <p class="text-muted text-sm mt-2">Requiring attention</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="grid grid-cols-2 gap-8">
+        <!-- Recent Gate Passes -->
+        <div class="card">
+          <div class="flex justify-between items-center mb-4">
+            <h3>Recent Gate Pass Requests</h3>
+            <a href="requests.html" class="text-primary text-sm">View All</a>
+          </div>
+          <div id="gatePassList" class="space-y-3">
+            <p class="text-muted text-sm">Loading...</p>
+          </div>
+        </div>
+
+        <!-- Attendance Summary -->
+        <div class="card">
+          <div class="flex justify-between items-center mb-4">
+            <h3>Attendance Summary</h3>
+            <span class="badge badge-success">Today</span>
+          </div>
+          <div id="attendanceSummary" class="space-y-3">
+            <p class="text-muted text-sm">Loading...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Complaints -->
+      <div class="card mt-8">
+        <div class="flex justify-between items-center mb-4">
+          <h3>Recent Complaints</h3>
+          <a href="complaints.html" class="text-primary text-sm">View All</a>
+        </div>
+        <div id="complaintsList" class="space-y-3">
+          <p class="text-muted text-sm">Loading...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Load Components -->
+  <script>
+    // Load sidebar and navbar
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sidebarRes = await fetch('components/sidebar.html');
+        document.getElementById('sidebar-container').innerHTML = await sidebarRes.text();
+        
+        const navbarRes = await fetch('components/navbar.html');
+        document.getElementById('navbar-container').innerHTML = await navbarRes.text();
+
+        // Activate sidebar item
+        setTimeout(() => {
+          const dashboardLink = document.querySelector('[data-page="dashboard"]');
+          if (dashboardLink) dashboardLink.classList.add('active');
+        }, 100);
+      } catch (error) {
+        console.error('Error loading components:', error);
+      }
+    });
+  </script>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visitors - HostelSync Warden Portal</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="visitors">
+  <div id="sidebar-container"></div>
+  <div id="navbar-container"></div>
+
+  <main>
+    <div class="page-content">
+      <div class="flex justify-between items-end mb-8">
+        <div>
+          <h1 class="mb-2">Visitor Management</h1>
+          <p class="text-muted">Track and manage hostel visitors.</p>
+        </div>
+        <button class="btn btn-primary">
+          <span class="material-symbols-outlined">add</span>
+          Register Visitor
+        </button>
+      </div>
+
+      <div class="card mb-6">
+        <div class="grid grid-cols-3 gap-4">
+          <div class="form-group">
+            <label>Status</label>
+            <select class="form-control">
+              <option>All</option>
+              <option>Checked In</option>
+              <option>Checked Out</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" class="form-control">
+          </div>
+          <div class="form-group flex items-end">
+            <button class="btn btn-secondary w-full">Apply</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="mb-4">Active Visitors</h3>
+        <div class="overflow-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Visitor Name</th>
+                <th>Student</th>
+                <th>Block/Room</th>
+                <th>Check In</th>
+                <th>Check Out</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="visitorsList">
+              <tr>
+                <td colspan="7" class="text-center text-muted">No visitors</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sidebarRes = await fetch('components/sidebar.html');
+        document.getElementById('sidebar-container').innerHTML = await sidebarRes.text();
+        
+        const navbarRes = await fetch('components/navbar.html');
+        document.getElementById('navbar-container').innerHTML = await navbarRes.text();
+
+        setTimeout(() => {
+          const link = document.querySelector('[data-page="visitors"]');
+          if (link) link.classList.add('active');
+        }, 100);
+      } catch (error) {
+        console.error('Error loading components:', error);
+      }
+    });
+  </script>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/visitors.js"></script>
+</body>
+</html>

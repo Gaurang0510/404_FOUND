@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HostelSync | Gate Pass Requests</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#93000a",
+              "on-error": "#690005",
+              "on-primary": "#002e6a",
+              "on-tertiary": "#412d0b",
+              "tertiary-fixed": "#ffddb1",
+              "on-secondary-fixed": "#0e1b35",
+              "outline-variant": "#45464d",
+              "tertiary-container": "#2e1c00",
+              "on-secondary-container": "#acb8da",
+              "surface-container": "#171f32",
+              "on-secondary": "#24304b",
+              "inverse-on-surface": "#283044",
+              "surface-container-low": "#131b2e",
+              "secondary-fixed-dim": "#bac6e9",
+              "surface-tint": "#adc6ff",
+              "on-tertiary-fixed": "#291800",
+              "outline": "#8f9098",
+              "on-tertiary-fixed-variant": "#5a431f",
+              "on-surface": "#dae2fc",
+              "on-tertiary-container": "#a08259",
+              "tertiary": "#e3c193",
+              "on-primary-fixed": "#001a42",
+              "inverse-primary": "#005ac2",
+              "background": "#0b1325",
+              "surface-container-lowest": "#060e20",
+              "on-error-container": "#ffdad6",
+              "surface-container-high": "#222a3d",
+              "on-surface-variant": "#c6c6ce",
+              "on-secondary-fixed-variant": "#3b4663",
+              "primary-fixed": "#d8e2ff",
+              "primary": "#adc6ff",
+              "surface-container-highest": "#2d3448",
+              "surface-dim": "#0b1325",
+              "inverse-surface": "#dae2fc",
+              "error": "#ffb4ab",
+              "primary-container": "#001e4a",
+              "secondary-container": "#3d4966",
+              "surface-bright": "#31394d",
+              "on-background": "#dae2fc",
+              "on-primary-container": "#3d84f8",
+              "primary-fixed-dim": "#adc6ff",
+              "on-primary-fixed-variant": "#004395",
+              "tertiary-fixed-dim": "#e3c193",
+              "surface-variant": "#2d3448",
+              "surface": "#0b1325",
+              "secondary": "#bac6e9",
+              "secondary-fixed": "#d9e2ff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .glow-on-hover:hover {
+            box-shadow: 0 0 15px rgba(173, 198, 255, 0.2);
+        }
+        .tonal-shift-bg {
+            background: linear-gradient(to bottom, #060e20, #0b1325);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060e20;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3448;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full z-40 py-6 flex flex-col bg-[#060e20]/60 backdrop-blur-2xl h-screen w-72 rounded-r-[1.5rem] shadow-[0_0_15px_rgba(173,198,255,0.04)]">
+<div class="px-8 mb-10 flex flex-col gap-1">
+<h1 class="text-[#adc6ff] font-black tracking-tighter text-2xl font-headline">HostelSync</h1>
+<p class="text-on-surface-variant/60 text-xs uppercase tracking-widest font-bold">Warden Portal</p>
+</div>
+<nav class="flex-1 space-y-1 px-4 overflow-y-auto">
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] transition-colors duration-300 hover:bg-[#131b2e] rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Dashboard</span>
+</a>
+<!-- Active Tab: Gate Pass Requests -->
+<a class="flex items-center gap-4 px-4 py-3 bg-[#171f32] text-[#adc6ff] rounded-full mx-2 font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="event_available">event_available</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Gate Pass Requests</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] transition-colors duration-300 hover:bg-[#131b2e] rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="exit_to_app">exit_to_app</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Leave Requests</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] transition-colors duration-300 hover:bg-[#131b2e] rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="report_problem">report_problem</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Complaints</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] transition-colors duration-300 hover:bg-[#131b2e] rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="group_add">group_add</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Visitors</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] transition-colors duration-300 hover:bg-[#131b2e] rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Attendance</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] transition-colors duration-300 hover:bg-[#131b2e] rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="how_to_vote">how_to_vote</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Mess Voting</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] transition-colors duration-300 hover:bg-[#131b2e] rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Students</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] transition-colors duration-300 hover:bg-[#131b2e] rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Notifications</span>
+</a>
+</nav>
+<div class="px-4 mt-auto">
+<a class="flex items-center gap-4 px-4 py-3 text-error hover:bg-error/10 transition-all rounded-full mb-4" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Logout</span>
+</a>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl">
+<img alt="Warden Profile Avatar" class="w-10 h-10 rounded-full object-cover" data-alt="professional portrait of a senior hostel warden with a friendly expression in a dark office setting with blue ambient light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPm7gNCcc76Rz0eYz3vtgon_XQZh5gS9Wj-EBrFGyPLFUKHvl_FZ60J2b0qp-tqoV0HFKgSDFoQyeP4BOxdCN2SHpPyOLcURr6sV0j1vlkfg3oSN-CJF8X2LtxrFQu5BOxyCSdK5knORV9X00t7zNh8FQu0LSV5nkAaunLlRvCAY7JjbipO5MDdFqoyPLkOSSvI9rGp2lw_49ERQVqzkmvDEq2CroZEcW2aQX4YCGQ3JQKVf5E9TWxhDOPoSIyQRGwTvm_t36heZ0"/>
+<div class="overflow-hidden">
+<p class="text-on-surface font-bold text-sm truncate">Robert Chen</p>
+<p class="text-on-surface-variant text-xs truncate">Head Warden</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-72 z-30 flex justify-between items-center px-8 h-16 bg-[#131b2e]/70 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+<div class="flex items-center gap-4">
+<h2 class="text-on-surface font-headline font-extrabold text-xl">Gate Pass Management</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<button class="p-2 text-[#c6c6ce] hover:bg-[#222a3d] transition-all rounded-full glow-on-hover">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-[#c6c6ce] hover:bg-[#222a3d] transition-all rounded-full glow-on-hover">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+</button>
+<button class="p-2 text-[#c6c6ce] hover:bg-[#222a3d] transition-all rounded-full glow-on-hover">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+</button>
+</div>
+<div class="h-8 w-px bg-outline-variant/20"></div>
+<div class="flex items-center gap-3">
+<span class="text-sm font-medium text-on-surface-variant font-body">Active Monitor</span>
+<div class="w-10 h-5 bg-primary/20 rounded-full p-1 cursor-pointer relative">
+<div class="w-3 h-3 bg-primary rounded-full shadow-[0_0_8px_#adc6ff]"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pl-72 pt-16 min-h-screen">
+<div class="p-8 space-y-8">
+<!-- Statistics Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-surface-container-low p-6 rounded-lg space-y-2">
+<p class="text-on-surface-variant text-xs uppercase tracking-widest font-bold">Pending Today</p>
+<div class="flex items-end justify-between">
+<h3 class="text-3xl font-headline font-extrabold text-tertiary">24</h3>
+<span class="text-tertiary/20 material-symbols-outlined text-4xl" data-icon="pending_actions">pending_actions</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg space-y-2">
+<p class="text-on-surface-variant text-xs uppercase tracking-widest font-bold">Approved</p>
+<div class="flex items-end justify-between">
+<h3 class="text-3xl font-headline font-extrabold text-primary">142</h3>
+<span class="text-primary/20 material-symbols-outlined text-4xl" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg space-y-2">
+<p class="text-on-surface-variant text-xs uppercase tracking-widest font-bold">Late Returns</p>
+<div class="flex items-end justify-between">
+<h3 class="text-3xl font-headline font-extrabold text-error">08</h3>
+<span class="text-error/20 material-symbols-outlined text-4xl" data-icon="alarm">alarm</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg space-y-2">
+<p class="text-on-surface-variant text-xs uppercase tracking-widest font-bold">Total Active</p>
+<div class="flex items-end justify-between">
+<h3 class="text-3xl font-headline font-extrabold text-on-surface">56</h3>
+<span class="text-on-surface/20 material-symbols-outlined text-4xl" data-icon="directions_run">directions_run</span>
+</div>
+</div>
+</section>
+<!-- Request Table Section -->
+<section class="bg-surface-container-low rounded-lg overflow-hidden">
+<div class="p-6 flex justify-between items-center bg-surface-container">
+<h3 class="text-xl font-headline font-bold text-on-surface">Recent Requests</h3>
+<div class="flex gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-highest border-none rounded-full text-sm focus:ring-2 focus:ring-primary/40 transition-all w-64 placeholder:text-on-surface-variant/40" placeholder="Search students..." type="text"/>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-high rounded-full text-sm font-medium hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                            Filters
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container/50">
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Student Name</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Room</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Exit Time</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Return Time</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Reason</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Status</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent">
+<!-- Row 1: Pending -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<img alt="Student" class="w-10 h-10 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="close-up portrait of a young male student in a library with soft warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoVGUcAxcN1P2XlOttcBRWBwiNOcDI17use4IIL5kPOhsNdIm_Y0sJWe6Y4nCDkyNqUlTD2oVE0ARVgCETQXg6Oi1wKoc5hA4akZbK3Egs_wREa_fKGX2kqv7OUyINgms0mP1Q03wgujwArM9zqSNWV0_QeozOVs8I8-AIv6lq7eVMU8iNqZ-KoLBK1T9VizUHA4eSQjOwlcmB5423SumHfcBS2I1ciPaDkeg8xECPQmLRuwjtW_70k4HMH4E7LD-2PxZdLJn20xg"/>
+<div>
+<p class="font-semibold text-on-surface">Arjun Sharma</p>
+<p class="text-xs text-on-surface-variant">ID: HS-2024-089</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface font-medium">B-302</td>
+<td class="px-6 py-5 text-on-surface-variant">Oct 24, 17:30</td>
+<td class="px-6 py-5 text-on-surface-variant">Oct 24, 21:00</td>
+<td class="px-6 py-5 text-on-surface-variant text-sm italic">"Local market for stationery and groceries"</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_8px_#e3c193]"></span>
+                                        Pending
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="bg-gradient-to-tr from-primary to-on-primary-container text-on-primary px-4 py-1.5 rounded-full text-xs font-bold glow-on-hover transition-all active:scale-95">Approve</button>
+<button class="bg-transparent border border-outline-variant/30 text-error px-4 py-1.5 rounded-full text-xs font-bold hover:bg-error/10 transition-all active:scale-95">Reject</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Approved -->
+<tr class="bg-surface-container/30 hover:bg-surface-container transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<img alt="Student" class="w-10 h-10 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="professional headshot of a young woman smiling outdoors with soft bokeh city lights in background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQC1wwg3LKyy_SOsLsRYKe8UY5elkD3rEhiePvegBVNiqCHj3yKLuRIgrSfiXYbUX-BuZAYoLbt13LweWFn2lWcI8zmw2Ai2DJzHBoeb0rr0YctbihzSHec3gbB_9NzY7vcPJOWmYC7OxLWZ_zvXrKWSSpa0MBWsVpXGXK1L0F1jM-mv1V8duC6WnCuf07eR3UKI-v6-y3HMA4lY6Id1yBYPgoCb5IznYWdGX5BJRzDmdyeUr8b1-Z6nbj6VsW8TKw1DcJGwrhlvU"/>
+<div>
+<p class="font-semibold text-on-surface">Priya Verma</p>
+<p class="text-xs text-on-surface-variant">ID: HS-2024-112</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface font-medium">A-105</td>
+<td class="px-6 py-5 text-on-surface-variant">Oct 24, 18:00</td>
+<td class="px-6 py-5 text-on-surface-variant">Oct 24, 20:30</td>
+<td class="px-6 py-5 text-on-surface-variant text-sm italic">"Group study at Central Library"</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-on-primary-container/10 text-primary text-xs font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_#adc6ff]"></span>
+                                        Approved
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right text-on-surface-variant text-xs">
+                                    Approved by Warden at 16:15
+                                </td>
+</tr>
+<!-- Row 3: Rejected -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<img alt="Student" class="w-10 h-10 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="headshot of a young man with a focused look in a modern tech environment with neon blue lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEg7VAQxV0INBKutpxMc6P72ECaZLoZjTfFvjrfKjP_qNkl8WIBDc9slD_7e1potE4hjT1KbECtwf8AHYxUQI2lL2ruzOlo6LzfcSvlWbbx3VS5TkPeBw8gvLiSsqVrxi05W1CD_Gv5SkGuQ0Vd-2c29_12bl3odJCzLbLs0NytxDQWnnMyNFh7BilYIRUdW-xVSGY3HZCEj3JyaR3ZGcOi9XPzEuw_Vg0FFzI2MUr27co8pf1Ff4U567uiu3td4zffoBGnGM3KmM"/>
+<div>
+<p class="font-semibold text-on-surface">Vikram Singh</p>
+<p class="text-xs text-on-surface-variant">ID: HS-2024-045</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface font-medium">C-408</td>
+<td class="px-6 py-5 text-on-surface-variant">Oct 24, 22:00</td>
+<td class="px-6 py-5 text-on-surface-variant">Oct 25, 01:00</td>
+<td class="px-6 py-5 text-on-surface-variant text-sm italic">"Late night movie show"</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-error/10 text-error text-xs font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-error shadow-[0_0_8px_#ffb4ab]"></span>
+                                        Rejected
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right text-error text-xs italic">
+                                    Exceeds curfew hours
+                                </td>
+</tr>
+<!-- Row 4: Pending -->
+<tr class="bg-surface-container/30 hover:bg-surface-container transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<img alt="Student" class="w-10 h-10 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all" data-alt="close-up of a young woman's face with a calm expression in a cool toned evening setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAii2AqxkbJVtY-HrNqiqpiwWq4B7DtpGsuu96kBw6fDS5DGRH9jh8DCaUn9LSUzS6SW-YE5P3PkzIhPrOKlrZu_wLkTrW3QN0bbkwHKbVpk-ncM1Lmubnvgk_5DmrAgiuwnqG8e3a2iY0XvJmlJvYz2GaNegrtuUcPaTin2TjnzHm-pwOqYpAiJ0BrObKAJTgcVdXjtAHVVE-MHrT_5xGU6P7Khx1AXZzLuULD6MwoIUBFS2pO4nlStsrsMESQBOu_2izmtSMf228"/>
+<div>
+<p class="font-semibold text-on-surface">Ananya Das</p>
+<p class="text-xs text-on-surface-variant">ID: HS-2024-210</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface font-medium">A-201</td>
+<td class="px-6 py-5 text-on-surface-variant">Oct 24, 16:45</td>
+<td class="px-6 py-5 text-on-surface-variant">Oct 24, 19:45</td>
+<td class="px-6 py-5 text-on-surface-variant text-sm italic">"Dental appointment"</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-xs font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_8px_#e3c193]"></span>
+                                        Pending
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="bg-gradient-to-tr from-primary to-on-primary-container text-on-primary px-4 py-1.5 rounded-full text-xs font-bold glow-on-hover transition-all active:scale-95">Approve</button>
+<button class="bg-transparent border border-outline-variant/30 text-error px-4 py-1.5 rounded-full text-xs font-bold hover:bg-error/10 transition-all active:scale-95">Reject</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="px-6 py-4 flex items-center justify-between bg-surface-container/20">
+<p class="text-xs text-on-surface-variant">Showing 1 to 4 of 24 requests</p>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container-high rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="p-2 bg-primary text-on-primary rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold">1</button>
+<button class="p-2 bg-surface-container-high rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold text-on-surface-variant hover:text-on-surface transition-colors">2</button>
+<button class="p-2 bg-surface-container-high rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold text-on-surface-variant hover:text-on-surface transition-colors">3</button>
+<button class="p-2 bg-surface-container-high rounded-full text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Floating Action Button for Emergency Overrides (Contextual) -->
+<!-- Suppressed on this page as per UX guidelines prioritizing list focus -->
+</body></html>

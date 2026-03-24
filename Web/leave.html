@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave Requests - HostelSync Warden Portal</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="leave">
+  <!-- Sidebar -->
+  <div id="sidebar-container"></div>
+
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Main Content -->
+  <main>
+    <div class="page-content">
+      <!-- Page Header -->
+      <div class="flex justify-between items-end mb-8">
+        <div>
+          <h1 class="mb-2">Leave Requests</h1>
+          <p class="text-muted">Manage and approve student leave requests.</p>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="card mb-6">
+        <div class="grid grid-cols-4 gap-4">
+          <div class="form-group">
+            <label for="filterStatus">Status</label>
+            <select id="filterStatus" class="form-control">
+              <option value="">All</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="filterType">Type</label>
+            <select id="filterType" class="form-control">
+              <option value="">All</option>
+              <option value="sick">Sick Leave</option>
+              <option value="casual">Casual Leave</option>
+              <option value="emergency">Emergency</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="filterStudent">Student</label>
+            <input type="text" id="filterStudent" class="form-control" placeholder="Search...">
+          </div>
+          <div class="form-group flex items-end">
+            <button class="btn btn-secondary w-full" id="applyFiltersBtn">
+              <span class="material-symbols-outlined">search</span>
+              Apply
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Requests Table -->
+      <div class="card">
+        <h3 class="mb-4">Leave Requests</h3>
+        <div class="overflow-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="requestsTable">
+              <tr>
+                <td colspan="7" class="text-center text-muted">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Load Components -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sidebarRes = await fetch('components/sidebar.html');
+        document.getElementById('sidebar-container').innerHTML = await sidebarRes.text();
+        
+        const navbarRes = await fetch('components/navbar.html');
+        document.getElementById('navbar-container').innerHTML = await navbarRes.text();
+
+        setTimeout(() => {
+          const link = document.querySelector('[data-page="leave"]');
+          if (link) link.classList.add('active');
+        }, 100);
+      } catch (error) {
+        console.error('Error loading components:', error);
+      }
+    });
+  </script>
+
+  <script src="assets/js/api_service.js"></script>
+  <script>
+    // Simple leave requests page
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        // Mock data for demo
+        const mockData = [
+          { id: 1, studentName: 'Rajesh Kumar', type: 'Casual', startDate: '2024-03-25', endDate: '2024-03-26', reason: 'Family event', status: 'pending' },
+          { id: 2, studentName: 'Priya Sharma', type: 'Sick', startDate: '2024-03-24', endDate: '2024-03-24', reason: 'Fever', status: 'approved' }
+        ];
+
+        const table = document.getElementById('requestsTable');
+        if (table) {
+          table.innerHTML = mockData.map(req => `
+            <tr>
+              <td>${req.studentName}</td>
+              <td>${req.type}</td>
+              <td>${req.startDate}</td>
+              <td>${req.endDate}</td>
+              <td>${req.reason}</td>
+              <td><span class="badge badge-${req.status === 'approved' ? 'success' : req.status === 'pending' ? 'pending' : 'rejected'}">${req.status}</span></td>
+              <td>
+                <button class="btn btn-primary btn-sm">Review</button>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Error loading leave requests:', error);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HostelSync Warden Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#93000a",
+              "on-error": "#690005",
+              "on-primary": "#002e6a",
+              "on-tertiary": "#412d0b",
+              "tertiary-fixed": "#ffddb1",
+              "on-secondary-fixed": "#0e1b35",
+              "outline-variant": "#45464d",
+              "tertiary-container": "#2e1c00",
+              "on-secondary-container": "#acb8da",
+              "surface-container": "#171f32",
+              "on-secondary": "#24304b",
+              "inverse-on-surface": "#283044",
+              "surface-container-low": "#131b2e",
+              "secondary-fixed-dim": "#bac6e9",
+              "surface-tint": "#adc6ff",
+              "on-tertiary-fixed": "#291800",
+              "outline": "#8f9098",
+              "on-tertiary-fixed-variant": "#5a431f",
+              "on-surface": "#dae2fc",
+              "on-tertiary-container": "#a08259",
+              "tertiary": "#e3c193",
+              "on-primary-fixed": "#001a42",
+              "inverse-primary": "#005ac2",
+              "background": "#0b1325",
+              "surface-container-lowest": "#060e20",
+              "on-error-container": "#ffdad6",
+              "surface-container-high": "#222a3d",
+              "on-surface-variant": "#c6c6ce",
+              "on-secondary-fixed-variant": "#3b4663",
+              "primary-fixed": "#d8e2ff",
+              "primary": "#adc6ff",
+              "surface-container-highest": "#2d3448",
+              "surface-dim": "#0b1325",
+              "inverse-surface": "#dae2fc",
+              "error": "#ffb4ab",
+              "primary-container": "#001e4a",
+              "secondary-container": "#3d4966",
+              "surface-bright": "#31394d",
+              "on-background": "#dae2fc",
+              "on-primary-container": "#3d84f8",
+              "primary-fixed-dim": "#adc6ff",
+              "on-primary-fixed-variant": "#004395",
+              "tertiary-fixed-dim": "#e3c193",
+              "surface-variant": "#2d3448",
+              "surface": "#0b1325",
+              "secondary": "#bac6e9",
+              "secondary-fixed": "#d9e2ff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: linear-gradient(135deg, rgba(23, 31, 50, 0.4) 0%, rgba(19, 27, 46, 0.2) 100%);
+        backdrop-filter: blur(12px);
+      }
+      .glow-primary {
+        box-shadow: 0 0 20px rgba(173, 198, 255, 0.1);
+      }
+      .sidebar-active {
+        background: #171f32;
+        color: #adc6ff;
+        border-radius: 9999px;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full z-40 py-6 flex flex-col bg-[#060e20]/60 backdrop-blur-2xl h-screen w-72 rounded-r-[1.5rem] shadow-[0_0_15px_rgba(173,198,255,0.04)]">
+<div class="px-8 mb-10 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-on-primary-container flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-on-primary font-bold">domain</span>
+</div>
+<div>
+<h1 class="text-[#adc6ff] font-black tracking-tighter text-2xl font-headline">HostelSync</h1>
+<p class="text-on-surface-variant/60 text-xs font-medium uppercase tracking-widest">Warden Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-4 px-4 py-3 bg-[#171f32] text-[#adc6ff] rounded-full mx-2 font-semibold transition-all scale-98" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] hover:bg-[#131b2e] rounded-full transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">event_available</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Gate Pass Requests</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] hover:bg-[#131b2e] rounded-full transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">exit_to_app</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Leave Requests</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] hover:bg-[#131b2e] rounded-full transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Complaints</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] hover:bg-[#131b2e] rounded-full transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">group_add</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Visitors</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] hover:bg-[#131b2e] rounded-full transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Attendance</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] hover:bg-[#131b2e] rounded-full transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">how_to_vote</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Mess Voting</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] hover:bg-[#131b2e] rounded-full transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">person_search</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Students</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#c6c6ce]/80 hover:text-[#dae2fc] hover:bg-[#131b2e] rounded-full transition-colors duration-300" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Notifications</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full flex items-center gap-4 px-4 py-4 text-[#c6c6ce]/80 hover:text-error hover:bg-error/10 rounded-full transition-all">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-['Manrope'] font-bold text-lg tracking-tight">Logout</span>
+</button>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-72 z-30 flex justify-between items-center px-8 h-16 bg-[#131b2e]/70 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant font-label text-sm">Dashboard / Home</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<button class="hover:bg-[#222a3d] transition-all rounded-full p-2 text-[#c6c6ce]">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-[#222a3d] transition-all rounded-full p-2 text-[#c6c6ce]">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+<button class="hover:bg-[#222a3d] transition-all rounded-full p-2 text-[#adc6ff]">
+<span class="material-symbols-outlined">schedule</span>
+</button>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/20">
+<div class="text-right">
+<p class="text-sm font-bold text-on-surface">Dr. Robert Chen</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Chief Warden</p>
+</div>
+<img alt="Warden Profile Avatar" class="w-10 h-10 rounded-full border-2 border-primary/20" data-alt="professional male portrait with short dark hair wearing a white shirt and glasses in a clean modern avatar style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBx4WzLwZYQO65lwd1M7EiafLRRiyCXA63QepyvP6ut-AUlOiYz8ZL-CAINEdo-dX3iH-oDp425-V8FuUpztt0na1YNDshL6rJUIYLwJVjMCH6tpmyfXuHNoN28Y6X2hET5P4XW1qY4saL20qqJKP8xcvYORrsDhnZrqCpv2ZVlU-ZKoYJjnxDXa48wjdL7NIuxKPwiZSoGFa6UAR-ZW_kK-OxNkROfZF5jqC22lzCGn8NIPrvh6IQ4fA9qXZqPpSr7R_IpNq1SSY"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-72 pt-24 px-8 pb-12 min-h-screen">
+<div class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="text-4xl font-black font-headline tracking-tight text-on-surface mb-2">Hostel Insight</h2>
+<p class="text-on-surface-variant text-lg max-w-2xl">Real-time occupancy and request oversight for Block A &amp; B.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                    Generate Report
+                </button>
+<button class="bg-gradient-to-r from-primary to-on-primary-container text-on-primary px-8 py-3 rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+                    Quick Action
+                </button>
+</div>
+</div>
+<!-- Bento Grid Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Total Students -->
+<div class="relative group overflow-hidden bg-surface-container-low rounded-lg p-8 glow-primary transition-all hover:translate-y-[-4px]">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-primary/10 transition-colors"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-primary-container/30 rounded-2xl">
+<span class="material-symbols-outlined text-primary text-3xl">school</span>
+</div>
+<span class="text-primary text-sm font-bold bg-primary/10 px-3 py-1 rounded-full">+12 new</span>
+</div>
+<p class="text-on-surface-variant font-medium text-sm uppercase tracking-widest mb-1">Total Students</p>
+<h3 class="text-5xl font-black font-headline text-on-surface">1,248</h3>
+<div class="mt-6 w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 88%;"></div>
+</div>
+<p class="mt-3 text-xs text-on-surface-variant/70 italic">88% Capacity utilized across all wings</p>
+</div>
+<!-- Pending Gate Pass -->
+<div class="relative group overflow-hidden bg-surface-container-low rounded-lg p-8 glow-primary transition-all hover:translate-y-[-4px]">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-tertiary/10 transition-colors"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-tertiary-container/40 rounded-2xl">
+<span class="material-symbols-outlined text-tertiary text-3xl">pending_actions</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-tertiary/10">
+<div class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#e3c193]"></div>
+<span class="text-tertiary text-sm font-bold">Action Needed</span>
+</div>
+</div>
+<p class="text-on-surface-variant font-medium text-sm uppercase tracking-widest mb-1">Pending Gate Pass</p>
+<h3 class="text-5xl font-black font-headline text-on-surface">42</h3>
+<div class="mt-6 flex gap-2">
+<button class="flex-1 bg-surface-container-high hover:bg-tertiary hover:text-on-tertiary py-2 rounded-full text-sm font-bold transition-all">Review All</button>
+<button class="flex-1 bg-surface-container-high hover:bg-primary hover:text-on-primary py-2 rounded-full text-sm font-bold transition-all">Bulk Approve</button>
+</div>
+</div>
+<!-- Leave Requests -->
+<div class="relative group overflow-hidden bg-surface-container-low rounded-lg p-8 glow-primary transition-all hover:translate-y-[-4px]">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-secondary/10 transition-colors"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-secondary-container/30 rounded-2xl">
+<span class="material-symbols-outlined text-secondary text-3xl">luggage</span>
+</div>
+<span class="text-secondary text-sm font-bold bg-secondary/10 px-3 py-1 rounded-full">18 Returning Today</span>
+</div>
+<p class="text-on-surface-variant font-medium text-sm uppercase tracking-widest mb-1">Leave Requests</p>
+<h3 class="text-5xl font-black font-headline text-on-surface">114</h3>
+<div class="mt-6 space-y-3">
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Medical Reasons</span>
+<span class="text-on-surface font-bold">24</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-on-surface-variant">Home Visit</span>
+<span class="text-on-surface font-bold">90</span>
+</div>
+</div>
+</div>
+<!-- Attendance Percentage -->
+<div class="relative group overflow-hidden bg-surface-container-low rounded-lg p-8 glow-primary transition-all hover:translate-y-[-4px]">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-primary/10 transition-colors"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-primary-container/30 rounded-2xl">
+<span class="material-symbols-outlined text-primary text-3xl">how_to_reg</span>
+</div>
+<span class="text-primary text-sm font-bold bg-primary/10 px-3 py-1 rounded-full">Normal Range</span>
+</div>
+<p class="text-on-surface-variant font-medium text-sm uppercase tracking-widest mb-1">Attendance Today</p>
+<h3 class="text-5xl font-black font-headline text-on-surface">94.2%</h3>
+<div class="mt-6 flex items-center gap-4">
+<div class="flex-1 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 94%;"></div>
+</div>
+<span class="text-on-surface-variant text-xs font-bold">1,176 Present</span>
+</div>
+</div>
+<!-- Active Complaints -->
+<div class="relative group overflow-hidden bg-surface-container-low rounded-lg p-8 glow-primary transition-all hover:translate-y-[-4px]">
+<div class="absolute top-0 right-0 w-32 h-32 bg-error/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-error/10 transition-colors"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-error-container/30 rounded-2xl">
+<span class="material-symbols-outlined text-error text-3xl">emergency_home</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-error/10">
+<div class="w-2 h-2 rounded-full bg-error shadow-[0_0_8px_#ffb4ab]"></div>
+<span class="text-error text-sm font-bold">8 Critical</span>
+</div>
+</div>
+<p class="text-on-surface-variant font-medium text-sm uppercase tracking-widest mb-1">Active Complaints</p>
+<h3 class="text-5xl font-black font-headline text-on-surface">15</h3>
+<p class="mt-6 text-xs text-on-surface-variant">Primary Issues: <span class="text-on-surface font-bold">Electricity, Plumbing</span></p>
+</div>
+<!-- Visitors Today -->
+<div class="relative group overflow-hidden bg-surface-container-low rounded-lg p-8 glow-primary transition-all hover:translate-y-[-4px]">
+<div class="absolute top-0 right-0 w-32 h-32 bg-on-tertiary-container/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-on-tertiary-container/10 transition-colors"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-tertiary-container/30 rounded-2xl">
+<span class="material-symbols-outlined text-tertiary text-3xl">meeting_room</span>
+</div>
+<span class="text-tertiary text-sm font-bold bg-tertiary/10 px-3 py-1 rounded-full">3 Active Now</span>
+</div>
+<p class="text-on-surface-variant font-medium text-sm uppercase tracking-widest mb-1">Visitors Today</p>
+<h3 class="text-5xl font-black font-headline text-on-surface">27</h3>
+<div class="mt-6 flex -space-x-3">
+<img alt="Visitor 1" class="w-10 h-10 rounded-full border-4 border-surface-container-low" data-alt="avatar of a visiting person with dark hair and casual clothing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy7mWSyYe9U7rWCrsYsspZ0Prz8rJQsn668vT_i1JPP4ExbBiJis0BoQodxW9aHGMPFPzY_KsGayTzWTOpu-QK2XQDpsW2cugCRzu6ADYnFwRVhH4sDuhBst0fnMoI9QchblZ_Y0DYJU-nVwBEWb4dZc7FV9wXpmYXLw8tI0BNGcGVOLk3sCEh2onpdwy8oRGgNc6r0LcYbuTzE5I-mfrrSynDts1AhwIfubtmajyO47iQE37LWMO1VpJkX_ums5R9bmrpbQEekzI"/>
+<img alt="Visitor 2" class="w-10 h-10 rounded-full border-4 border-surface-container-low" data-alt="avatar of an elderly visitor with gray hair and a kind expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi91jpNv22leRX9n9yOkGbgSLER_gpWio9xWxBUwLQ8DP3tQ6QPsjdsYVjhDdfmjFy6NWQrzqbv5NaRMJ3soGZOH4FZXf98ZRNyUArWOsSvi8Y99TncFZHvKlH_yDNAFCFaL7SjAQpg9vbxaJP8X7OYUHd5Q7dCdhehYqrlPWrZHcqOSTLr2yaoLsgGQeN8uQuppkQbzsS5pxkze2eTvUP1Ds5idoz3CQQ1wwotkZEy6bKe8luniPeS5-_J3XEjw0-OjWiKLptTvE"/>
+<img alt="Visitor 3" class="w-10 h-10 rounded-full border-4 border-surface-container-low" data-alt="avatar of a young visitor with a ponytail and bright clothes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLNPh5uBGddfu4oIuB2IeKExRpeQBdqFRctVCTQwrHz-MGLeklO4n1OCrrgJCeegKXEFHHjGB7RnaUS-7q8CXQXMlMZ-xn-EdcxF9GyIDEMeMz9HB9TEQ51R4BQ1QdYQ2ijHWZbyyxH40Qi8doyKLRf1qmmL2umxCFSIthlet7QLzlisocH-47e1S3RzvFvKaeuNFSDEqZW94x97W0g4YgtqFUaFbi8Z3bSyuDYxS57P5xImYo87HXVNClMbCeO6qGIoYwsivjbzQ"/>
+<div class="w-10 h-10 rounded-full border-4 border-surface-container-low bg-surface-container-high flex items-center justify-center text-[10px] font-bold text-primary">+24</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Section -->
+<div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="bg-surface-container rounded-lg p-8">
+<div class="flex justify-between items-center mb-8">
+<h4 class="text-2xl font-bold font-headline">Recent Pass Activity</h4>
+<a class="text-primary text-sm font-bold hover:underline" href="#">View All</a>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl transition-all hover:bg-surface-container-high">
+<div class="flex items-center gap-4">
+<img alt="Student" class="w-12 h-12 rounded-xl" data-alt="close up avatar of a young male student with a focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA06t47x0mOX3nOkrS7PcTHb0KnetpYjtMX3Jz4UithvbkNYt4zehR41lFIfnQmPJUUgGtYqAA4_04egGXUvRtGa-WLVvNIlHcCm0jpeIfj5LEYzMyacgVJ0H9372s_orVS0fhi7SRijHDDdg-K-yYWOFbOUMSOFrqgVQMn147GENjld6EfXspuXvGN1koihivJOY_HASVSDPUAizoizMxhl1D4h-Iy7E3tQpj8dZ3VMsIHSFbWcdlvkxKipr4xpClz-JBaS2zQHmk"/>
+<div>
+<p class="font-bold text-on-surface">Arjun Sharma</p>
+<p class="text-xs text-on-surface-variant">Roll: #HS-4492 • Block B</p>
+</div>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider mb-2">
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div> Approved
+                            </span>
+<p class="text-[10px] text-on-surface-variant">2 mins ago</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl transition-all hover:bg-surface-container-high">
+<div class="flex items-center gap-4">
+<img alt="Student" class="w-12 h-12 rounded-xl" data-alt="avatar of a female student with long hair and a friendly smile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWbzDPL6yhXtNFLYSNtoBzd5nwmFsMDHGP9zf_ykBeqOkt4hHRLR-GQnVceaE0cYJrc_Ean51GA2CBYila8tlbuFxSfaybUpg8nCw8XIgbrSVPxx07P3sRZHxXDb5jbKJMacIoadTfBYN-Rp3yfcYVm1tk2h4riHR1z5WuZGQkG2ZD9iMAnn8JwT8OUJdbeSlE0s1Ux-cshLjD-CwLFbHyZi9i9SSKuxIpJku33L4cOYwoHSDlOIJawtekTGekar1EAiBsLQb1_88"/>
+<div>
+<p class="font-bold text-on-surface">Sneha Patil</p>
+<p class="text-xs text-on-surface-variant">Roll: #HS-3102 • Block A</p>
+</div>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-[10px] font-bold uppercase tracking-wider mb-2">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary"></div> Pending
+                            </span>
+<p class="text-[10px] text-on-surface-variant">15 mins ago</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-8 relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 80% 20%, #adc6ff 0%, transparent 40%);"></div>
+<div class="flex justify-between items-center mb-8 relative z-10">
+<h4 class="text-2xl font-bold font-headline">Maintenance Pulse</h4>
+<span class="p-2 bg-error/10 rounded-full text-error">
+<span class="material-symbols-outlined text-sm">warning</span>
+</span>
+</div>
+<div class="space-y-4 relative z-10">
+<div class="p-5 border border-outline-variant/10 rounded-2xl bg-surface-container-low/50 backdrop-blur-sm">
+<div class="flex justify-between mb-3">
+<span class="text-sm font-bold text-on-surface">Block B Elevator Maintenance</span>
+<span class="text-xs text-error font-bold">High Priority</span>
+</div>
+<div class="flex items-center gap-3 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                            Scheduled: Today, 22:00
+                        </div>
+</div>
+<div class="p-5 border border-outline-variant/10 rounded-2xl bg-surface-container-low/50 backdrop-blur-sm">
+<div class="flex justify-between mb-3">
+<span class="text-sm font-bold text-on-surface">Wi-Fi Router Replacement</span>
+<span class="text-xs text-on-surface-variant font-bold">Standard</span>
+</div>
+<div class="flex items-center gap-3 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                            Completed: 2h ago
+                        </div>
+</div>
+</div>
+<button class="w-full mt-6 py-4 border border-outline-variant/20 rounded-2xl text-sm font-bold text-on-surface-variant hover:bg-surface-container-highest transition-all">
+                    View Maintenance Log
+                </button>
+</div>
+</div>
+</main>
+<!-- Floating Action for Mobile / Quick Access -->
+<button class="fixed bottom-8 right-8 w-16 h-16 bg-primary text-on-primary rounded-full shadow-2xl shadow-primary/40 flex items-center justify-center hover:scale-110 active:scale-90 transition-all z-50">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</body></html>

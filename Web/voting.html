@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mess Voting - HostelSync Warden Portal</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="voting">
+  <div id="sidebar-container"></div>
+  <div id="navbar-container"></div>
+
+  <main>
+    <div class="page-content">
+      <div class="mb-8">
+        <h1 class="mb-2">Mess Voting</h1>
+        <p class="text-muted">Manage mess vendor voting and results.</p>
+      </div>
+
+      <div class="grid grid-cols-4 gap-6 mb-8">
+        <div class="card">
+          <p class="text-muted mb-2">Total Voters</p>
+          <h3 id="totalVoters">0</h3>
+        </div>
+        <div class="card">
+          <p class="text-muted mb-2">Votes Received</p>
+          <h3 id="votesReceived">0</h3>
+        </div>
+        <div class="card">
+          <p class="text-muted mb-2">Voting Rate</p>
+          <h3 id="votingRate">0%</h3>
+        </div>
+        <div class="card">
+          <p class="text-muted mb-2">Status</p>
+          <h3 id="votingStatus" style="color: #2dd882;">Active</h3>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="mb-6">Voting Results</h3>
+        <div class="grid grid-cols-2 gap-8">
+          <div>
+            <h4 class="mb-4">Current Options</h4>
+            <div class="space-y-3" id="votingOptions">
+              <div class="flex items-center justify-between p-3 bg-surface-container rounded-lg">
+                <span>Option 1</span>
+                <span class="badge badge-info">0 votes</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-surface-container rounded-lg">
+                <span>Option 2</span>
+                <span class="badge badge-info">0 votes</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="mb-4">Voting Timeline</h4>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center p-3 bg-surface-container rounded-lg">
+                <span class="text-muted">Start Date</span>
+                <span id="startDate">-</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-surface-container rounded-lg">
+                <span class="text-muted">End Date</span>
+                <span id="endDate">-</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-surface-container rounded-lg">
+                <span class="text-muted">Days Remaining</span>
+                <span id="daysRemaining">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sidebarRes = await fetch('components/sidebar.html');
+        document.getElementById('sidebar-container').innerHTML = await sidebarRes.text();
+        
+        const navbarRes = await fetch('components/navbar.html');
+        document.getElementById('navbar-container').innerHTML = await navbarRes.text();
+
+        setTimeout(() => {
+          const link = document.querySelector('[data-page="voting"]');
+          if (link) link.classList.add('active');
+        }, 100);
+      } catch (error) {
+        console.error('Error loading components:', error);
+      }
+    });
+  </script>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/voting.js"></script>
+</body>
+</html>
