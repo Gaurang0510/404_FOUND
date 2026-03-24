@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HostelSync Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-on-surface": "#4d556b",
+              "on-primary-fixed-variant": "#0e009d",
+              "on-error-container": "#ffb2b9",
+              "error-dim": "#d73357",
+              "surface-container-highest": "#192540",
+              "background": "#060e20",
+              "on-surface-variant": "#a3aac4",
+              "inverse-primary": "#494bd7",
+              "outline-variant": "#40485d",
+              "secondary": "#69f6b8",
+              "error": "#ff6e84",
+              "surface-container-high": "#141f38",
+              "on-tertiary-fixed-variant": "#563400",
+              "tertiary-fixed": "#f8a010",
+              "primary-fixed-dim": "#8387ff",
+              "on-error": "#490013",
+              "surface-container": "#0f1930",
+              "tertiary-fixed-dim": "#e79400",
+              "outline": "#6d758c",
+              "on-secondary-container": "#e1ffec",
+              "secondary-fixed-dim": "#58e7ab",
+              "on-tertiary": "#573500",
+              "error-container": "#a70138",
+              "on-tertiary-container": "#4a2c00",
+              "primary-fixed": "#9396ff",
+              "secondary-container": "#006c49",
+              "surface-bright": "#1f2b49",
+              "on-primary-container": "#0a0081",
+              "on-primary": "#0f00a4",
+              "tertiary": "#ffb148",
+              "on-secondary": "#005a3c",
+              "on-secondary-fixed-variant": "#006544",
+              "surface-variant": "#192540",
+              "inverse-surface": "#faf8ff",
+              "surface-container-lowest": "#000000",
+              "secondary-dim": "#58e7ab",
+              "primary-container": "#9396ff",
+              "on-secondary-fixed": "#00452d",
+              "primary": "#a3a6ff",
+              "tertiary-container": "#f8a010",
+              "on-background": "#dee5ff",
+              "surface-tint": "#a3a6ff",
+              "primary-dim": "#6063ee",
+              "surface": "#060e20",
+              "surface-dim": "#060e20",
+              "on-surface": "#dee5ff",
+              "secondary-fixed": "#69f6b8",
+              "on-tertiary-fixed": "#2a1700",
+              "tertiary-dim": "#e79400",
+              "on-primary-fixed": "#000000",
+              "surface-container-low": "#091328"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Manrope"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(25, 37, 64, 0.6);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      body {
+        background-color: #060e20;
+        color: #dee5ff;
+        font-family: 'Manrope', sans-serif;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #192540;
+        border-radius: 10px;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface font-body selection:bg-primary-fixed/30 pb-24 md:pb-0">
+<!-- Top Navigation Anchor -->
+<header class="bg-[#060e20] flex items-center justify-between w-full px-6 py-4 fixed top-0 z-50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-indigo-500" data-icon="arrow_back">arrow_back</span>
+<h1 class="font-['Manrope'] font-black text-xl text-indigo-500 tracking-tight">HostelSync</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#a3aac4]" data-icon="notifications">notifications</span>
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="close-up portrait of a young man with a friendly expression in a modern indoor setting with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFZ5hGOdNifALkXHRtv3XjV2C_g21E_EOhOTO9rfEb6nzQIBBAxSqwIHLn-JRmseLYEUYlBnt5Q0W17anMshivL6Hvb5pQBoDOpUlvUNiIzyl91Ho3toNGQ0JeYeAV6WiJ4Ivk5FikLCLkbgkwg0sb7CU3IMHJvSVgCNOdJz3B7m7OGSMBmYaRnrMyWF6eqlLxBe01J8_eP8HpmwuUf8orMOHtsWkSsRfyMaMBriZfWsMOQCv1x5B1PcRYQ_e1KM6Y_khzg9OujhAR"/>
+</div>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-5xl mx-auto space-y-8">
+<!-- Top Section: Student Info -->
+<section class="flex flex-col gap-1">
+<h2 class="text-on-surface font-headline font-extrabold text-3xl tracking-tight">Hello, Arjun</h2>
+<p class="text-on-surface-variant font-label text-sm uppercase tracking-widest opacity-80">Hostel Dashboard</p>
+</section>
+<!-- Secondary Analytics (Small row cards) -->
+<section class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="bg-surface-container-low p-4 rounded-xl border border-white/5 flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="event_busy">event_busy</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-[10px] font-label uppercase tracking-tighter">Total Leaves</p>
+<p class="text-on-surface font-headline font-bold text-xl leading-tight">12</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-white/5 flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="pending_actions">pending_actions</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-[10px] font-label uppercase tracking-tighter">Pending</p>
+<p class="text-on-surface font-headline font-bold text-xl leading-tight">02</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-xl border border-white/5 flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-error-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-error" data-icon="report">report</span>
+</div>
+<div>
+<p class="text-on-surface-variant text-[10px] font-label uppercase tracking-tighter">Complaints</p>
+<p class="text-on-surface font-headline font-bold text-xl leading-tight">01</p>
+</div>
+</div>
+</section>
+<!-- Main Cards Grid (2-column) -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Gate Pass Card -->
+<div class="glass-card p-6 rounded-xl border border-secondary/10 relative overflow-hidden group">
+<div class="flex justify-between items-start mb-6">
+<div class="bg-secondary-container/20 p-3 rounded-lg">
+<span class="material-symbols-outlined text-secondary" data-icon="door_front">door_front</span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container text-[10px] font-label font-bold uppercase px-3 py-1 rounded-full">Active</span>
+</div>
+<h3 class="text-xl font-headline font-bold text-on-surface mb-1">Gate Pass</h3>
+<p class="text-on-surface-variant text-sm mb-6">Instant approval for local outings.</p>
+<!-- QR Code Display -->
+<div class="flex flex-col items-center bg-white p-4 rounded-2xl w-fit mx-auto mb-6 shadow-xl shadow-secondary/5">
+<span class="material-symbols-outlined text-8xl text-background" data-icon="qr_code_2" style="font-variation-settings: 'opsz' 48;">qr_code_2</span>
+<p class="text-[10px] font-label font-bold text-background mt-2 uppercase tracking-widest">HS-PASS-8842</p>
+</div>
+<div class="flex items-center justify-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="text-xs text-secondary-dim font-medium">Auto-approved by HostelSync API</span>
+</div>
+</div>
+<!-- Leave Request Card -->
+<div class="glass-card p-6 rounded-xl border border-primary/10 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl" data-icon="flight_takeoff">flight_takeoff</span>
+</div>
+<div class="flex justify-between items-start mb-6">
+<div class="bg-primary-container/20 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="home_filled" style="font-variation-settings: 'FILL' 1;">home_filled</span>
+</div>
+<span class="bg-tertiary-container text-on-tertiary-container text-[10px] font-label font-bold uppercase px-3 py-1 rounded-full">Pending</span>
+</div>
+<h3 class="text-xl font-headline font-bold text-on-surface mb-1">Leave Request</h3>
+<p class="text-on-surface-variant text-sm mb-6">Requires Warden approval (Home/Emergency).</p>
+<div class="flex items-center gap-3 bg-surface-container-high/40 p-3 rounded-lg border border-white/5 mb-6">
+<div class="w-1 h-8 bg-tertiary rounded-full"></div>
+<div>
+<p class="text-xs text-on-surface-variant">Last Request: Home Visit</p>
+<p class="text-[10px] text-tertiary-dim">Awaiting Warden Digital Signature</p>
+</div>
+</div>
+<button class="w-full border border-primary/30 text-primary font-headline font-bold py-3 rounded-xl active:scale-95 transition-transform">Request Leave</button>
+</div>
+<!-- Complaints Card -->
+<div class="glass-card p-6 rounded-xl border border-white/5 md:col-span-2 lg:col-span-1">
+<div class="flex justify-between items-center mb-6">
+<div class="bg-error-container/20 p-3 rounded-lg">
+<span class="material-symbols-outlined text-error" data-icon="plumbing">plumbing</span>
+</div>
+<div class="text-right">
+<p class="text-error font-headline font-bold text-xl">01</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-label">Active</p>
+</div>
+</div>
+<h3 class="text-xl font-headline font-bold text-on-surface mb-1">Complaints</h3>
+<p class="text-on-surface-variant text-sm mb-6">Facilities &amp; Maintenance reports.</p>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-secondary" data-icon="check_circle">check_circle</span>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-secondary" data-icon="check_circle">check_circle</span>
+</div>
+<div class="px-3 h-8 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center">
+<span class="text-[10px] font-bold text-on-surface-variant">+14 Resolved</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Activity Feed -->
+<section class="pb-12">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline font-bold text-xl text-on-surface">Recent Activity</h3>
+<button class="text-primary text-xs font-label uppercase tracking-widest">View History</button>
+</div>
+<div class="space-y-4 custom-scrollbar max-h-[400px] overflow-y-auto pr-2">
+<!-- Activity Item 1 -->
+<div class="bg-surface-container-low p-4 rounded-xl border-l-4 border-secondary flex items-start justify-between">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary" data-icon="task_alt">task_alt</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-on-surface">Leave Request Approved</h4>
+<p class="text-xs text-on-surface-variant">Your request for Diwali Break has been verified by Warden.</p>
+</div>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant whitespace-nowrap">2m ago</span>
+</div>
+<!-- Activity Item 2 -->
+<div class="bg-surface-container-low p-4 rounded-xl border-l-4 border-tertiary flex items-start justify-between">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary" data-icon="person_search">person_search</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-on-surface">Visitor Logged</h4>
+<p class="text-xs text-on-surface-variant">Mr. Ramesh (Father) checked in at the main gate.</p>
+</div>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant whitespace-nowrap">1h ago</span>
+</div>
+<!-- Activity Item 3 -->
+<div class="bg-surface-container-low p-4 rounded-xl border-l-4 border-primary flex items-start justify-between opacity-70">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="build">build</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-on-surface">Complaint Resolved</h4>
+<p class="text-xs text-on-surface-variant">Repair for Room 402 AC Unit completed by maintenance.</p>
+</div>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant whitespace-nowrap">Yesterday</span>
+</div>
+<!-- Skeleton State for Loading feel -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-white/5 flex items-start justify-between animate-pulse opacity-50">
+<div class="flex gap-4 w-full">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest shrink-0"></div>
+<div class="w-full space-y-2">
+<div class="h-3 w-1/3 bg-surface-container-highest rounded"></div>
+<div class="h-2 w-3/4 bg-surface-container-highest rounded"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#060e20]/80 backdrop-blur-xl rounded-t-[1.5rem] border-t border-white/5 shadow-[0_-4px_24px_rgba(99,102,241,0.08)]">
+<a class="flex flex-col items-center justify-center text-indigo-400 bg-indigo-500/10 rounded-xl px-3 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a3aac4] hover:text-white transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Requests</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a3aac4] hover:text-white transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Activity</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a3aac4] hover:text-white transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="how_to_vote">how_to_vote</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Voting</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#a3aac4] hover:text-white transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Inter'] text-[10px] font-medium uppercase tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+<!-- Contextual FAB for Quick Request -->
+<button class="fixed bottom-28 right-6 w-14 h-14 bg-gradient-to-br from-primary to-primary-dim text-on-primary rounded-full shadow-lg shadow-primary/20 flex items-center justify-center active:scale-95 duration-200 z-40 md:hidden">
+<span class="material-symbols-outlined text-3xl" data-icon="add">add</span>
+</button>
+</body></html>
