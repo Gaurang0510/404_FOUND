@@ -4,36 +4,42 @@ from pymongo import MongoClient
 from passlib.context import CryptContext
 from jose import jwt
 from datetime import datetime, timedelta
-
+from fastapi.middleware.cors import CORSMiddleware
 from bson import ObjectId
 import secrets
-import aiosmtplib
-from email.message import EmailMessage
+import random
+import string
 
-SMTP_HOST = "mail.sysnefo.com"
-SMTP_PORT = 465
-SMTP_USER = "hostelsync@sysnefo.com"
-SMTP_PASS = "complexPassword"
-FROM_EMAIL = SMTP_USER
 
 app = FastAPI()
 
-SECRET_KEY = "B&w1X9+)NiJaQ3Cbe&1f4x*Ey==,DFy*V=gKbaXmMvawR967&.*XpAS%cTzKmM:R%9P5i9VX2Lv7_%)6*0pN]1x/$G=ng@_!&hJWKa(?*V[Byb?cZX/$uKatyqRWWdZr"
+SECRET_KEY = "zxc"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 24 * 365 * 10
 
-client = MongoClient("mongodb://localhost:27017/")
+
+client = MongoClient(
+    "mongodb://localhost:27017/",
+    serverSelectionTimeoutMS=5000
+)
+
 db = client["hostel_sync"]
 users = db["users"]
 join_codes = db["hostel_join_codes"]
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def hash_password(password):
+def hash_password(password: str):
+    password = password[:72]
     return pwd_context.hash(password)
 
-def verify_password(password, hashed):
+def verify_password(password: str, hashed: str):
+    password = password[:72]
     return pwd_context.verify(password, hashed)
+
+# =========================================================
+# JWT
+# =========================================================
 
 def create_token(user_id, role):
     payload = {
@@ -42,6 +48,10 @@ def create_token(user_id, role):
         "exp": datetime.utcnow() + timedelta(hours=ACCESS_TOKEN_EXPIRE_HOURS)
     }
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+# =========================================================
+# MODELS
+# =========================================================
 
 class RegisterHosteler(BaseModel):
     name: str
@@ -56,16 +66,30 @@ class RegisterWarden(BaseModel):
     name: str
     email: str
     password: str
-    hostelId: str
+
 
 class JoinHostelRequest(BaseModel):
     userId: str
     code: str
 
+
 class LoginModel(BaseModel):
     email: str
     password: str
 
+# =========================================================
+# HELPERS
+# =========================================================
+
+def oid(id_str: str):
+    try:
+        return ObjectId(id_str)
+    except:
+        raise HTTPException(400, "Invalid ID")
+
+# =========================================================
+# REGISTER HOSTELER
+# =========================================================
 
 @app.post("/register/hosteler")
 def register_hosteler(data: RegisterHosteler):
@@ -73,7 +97,7 @@ def register_hosteler(data: RegisterHosteler):
     if users.find_one({"email": data.email}):
         raise HTTPException(400, "Email already registered")
 
-    doc = data.dict()
+    doc = data.model_dump()
     doc["role"] = "hosteler"
     doc["password"] = hash_password(data.password)
     doc["createdAt"] = datetime.utcnow()
@@ -82,43 +106,63 @@ def register_hosteler(data: RegisterHosteler):
 
     return {"userId": str(result.inserted_id)}
 
-@app.post("/join-hostel")
-def join_hostel(data: JoinHostelRequest):
+# =========================================================
+# REGISTER WARDEN
+# =========================================================
 
-    user = users.find_one({"_id": ObjectId(data.userId)})
+@app.post("/register/warden")
+def register_warden(data: RegisterWarden):
 
-    if not user or user["role"] != "hosteler":
-        raise HTTPException(403, "Invalid hosteler")
+    if users.find_one({"email": data.email}):
+        raise HTTPException(400, "Email already registered")
 
-    code_doc = join_codes.find_one({"_id": data.code})
+    doc = data.model_dump()
+    doc["role"] = "warden"
+    doc["password"] = hash_password(data.password)
+    doc["createdAt"] = datetime.utcnow()
 
-    if not code_doc or not code_doc["isActive"]:
-        raise HTTPException(400, "Invalid code")
-
-    if datetime.utcnow() > code_doc["expiresAt"]:
-        raise HTTPException(400, "Code expired")
-
-    # Add hostel to user
-    users.update_one(
-        {"_id": ObjectId(data.userId)},
-        {"$set": {"hostelId": code_doc["hostelId"]}}
+    # Generate hostel ID automatically
+    doc["hostelId"] = ''.join(
+        random.choices(string.ascii_uppercase + string.digits, k=8)
     )
 
-    # OPTIONAL: make code single-use
-    join_codes.update_one(
-        {"_id": data.code},
-        {"$set": {"isActive": False}}
-    )
+    result = users.insert_one(doc)
 
     return {
-        "message": "Joined hostel successfully 🎉",
-        "hostelId": code_doc["hostelId"]
+        "userId": str(result.inserted_id),
+        "hostelId": doc["hostelId"]
     }
+
+# =========================================================
+# LOGIN
+# =========================================================
+
+@app.post("/login")
+def login(data: LoginModel):
+
+    user = users.find_one({"email": data.email})
+
+    if not user or not verify_password(data.password, user["password"]):
+        raise HTTPException(401, "Invalid credentials")
+
+    token = create_token(str(user["_id"]), user["role"])
+
+    return {
+        "accessToken": token,
+        "userId": str(user["_id"]),
+        "role": user["role"],
+        "name": user["name"],
+        "hostelId": user.get("hostelId")
+    }
+
+# =========================================================
+# WARDEN GENERATES JOIN CODE
+# =========================================================
 
 @app.post("/warden/{warden_id}/new-join-code")
 def generate_join_code(warden_id: str):
 
-    warden = users.find_one({"_id": ObjectId(warden_id)})
+    warden = users.find_one({"_id": oid(warden_id)})
 
     if not warden or warden["role"] != "warden":
         raise HTTPException(403, "Not a warden")
@@ -130,7 +174,8 @@ def generate_join_code(warden_id: str):
         {"$set": {"isActive": False}}
     )
 
-    code = secrets.token_hex(16).upper() 
+    # Human-friendly code
+    code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 
     doc = {
         "_id": code,
@@ -145,40 +190,37 @@ def generate_join_code(warden_id: str):
 
     return {"joinCode": code, "expiresInMinutes": 5}
 
-@app.post("/register/warden")
-def register_warden(data: RegisterWarden):
+# =========================================================
+# HOSTELER JOINS VIA CODE
+# =========================================================
 
-    if users.find_one({"email": data.email}):
-        raise HTTPException(400, "Email already registered")
+@app.post("/join-hostel")
+def join_hostel(data: JoinHostelRequest):
 
-    doc = data.dict()
-    doc["role"] = "warden"
-    doc["password"] = hash_password(data.password)
-    doc["createdAt"] = datetime.utcnow()
+    user = users.find_one({"_id": oid(data.userId)})
 
-    result = users.insert_one(doc)
+    if not user or user["role"] != "hosteler":
+        raise HTTPException(403, "Invalid hosteler")
 
-    return {"userId": str(result.inserted_id)}
+    code_doc = join_codes.find_one({"_id": data.code})
 
+    if not code_doc or not code_doc["isActive"]:
+        raise HTTPException(400, "Invalid code")
 
+    if datetime.utcnow() > code_doc["expiresAt"]:
+        raise HTTPException(400, "Code expired")
 
-@app.post("/login")
-def login(data: LoginModel):
+    users.update_one(
+        {"_id": oid(data.userId)},
+        {"$set": {"hostelId": code_doc["hostelId"]}}
+    )
 
-    user = users.find_one({"email": data.email})
-
-    if not user:
-        raise HTTPException(401, "Invalid credentials")
-
-    if not verify_password(data.password, user["password"]):
-        raise HTTPException(401, "Invalid credentials")
-
-    token = create_token(str(user["_id"]), user["role"])
+    join_codes.update_one(
+        {"_id": data.code},
+        {"$set": {"isActive": False}}
+    )
 
     return {
-        "accessToken": token,
-        "userId": str(user["_id"]),
-        "role": user["role"],
-        "name": user["name"],
-        "hostelId": user["hostelId"]
+        "message": "Joined hostel successfully 🎉",
+        "hostelId": code_doc["hostelId"]
     }
