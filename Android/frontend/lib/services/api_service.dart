@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/models.dart';
 
+import 'package:flutter/foundation.dart'; // For kIsWeb
+
 class ApiService {
-  static const String baseUrl = 'http://10.0.2.2:8000'; // IP address required for Android Emulator to hit host localhost
-  static int? currentUserId;
-  static String? currentUserRole;
+  static const String baseUrl = kIsWeb ? 'http://localhost:8000' : 'http://10.197.192.17:8000'; // IP required for Emulator / Web
+  static int? currentUserId = 1; // Default mock user ID since login is bypassed
+  static String? currentUserRole = 'hosteler'; // Default mock role
 
   // --- Auth ---
   static Future<AuthResponse> login(String email, String password) async {

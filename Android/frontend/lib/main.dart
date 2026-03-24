@@ -15,7 +15,7 @@ class HostelSyncApp extends StatelessWidget {
     return MaterialApp(
       title: 'HostelSync',
       theme: AppTheme.darkTheme,
-      home: const LoginScreen(),
+      home: const MainLayout(), // Bypassing login screen for now
       debugShowCheckedModeBanner: false,
     );
   }
