@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Complaints | HostelSync Warden Portal</title>
+  <meta name="description" content="Complaints management for hostel warden" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div id="sidebar-root"></div>
+  <div id="navbar-root"></div>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h2>Active Issues</h2>
+        <p>Monitor and resolve student grievances across maintenance, mess, and general facilities.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="btn btn-secondary"><span class="material-symbols-outlined">filter_list</span> Filters</button>
+        <button class="btn btn-primary" onclick="openModal('complaintModal')"><span class="material-symbols-outlined">add</span> Log Complaint</button>
+      </div>
+    </div>
+
+    <!-- Complaint Cards -->
+    <div class="complaints-grid" id="complaintsGrid">
+      <div class="empty-state" style="grid-column:1/-1"><span class="material-symbols-outlined">hourglass_empty</span><h3>Loading complaints...</h3></div>
+    </div>
+
+    <!-- Stats Footer -->
+    <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:48px" id="complaintStats"></div>
+  </main>
+
+  <!-- Night Watch Toggle -->
+  <div class="night-watch">
+    <button class="night-watch-btn active"><span class="material-symbols-outlined" style="font-size:0.875rem;font-variation-settings:'FILL' 1">visibility</span> Active Monitor</button>
+    <button class="night-watch-btn"><span class="material-symbols-outlined" style="font-size:0.875rem">nightlight</span> Deep Watch</button>
+  </div>
+
+  <!-- Log Complaint Modal -->
+  <div class="modal-overlay" id="complaintModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Log New Complaint</h3>
+        <button onclick="closeModal('complaintModal')"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <form onsubmit="submitComplaint(event)">
+        <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="cTitle" placeholder="Brief description" required /></div>
+        <div class="form-group"><label class="form-label">Description</label><textarea class="form-input" id="cDesc" placeholder="Detailed description..." required></textarea></div>
+        <div class="form-group"><label class="form-label">Priority</label><select class="form-input" id="cPriority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option><option value="critical">Critical</option></select></div>
+        <div class="form-group"><label class="form-label">Category</label><select class="form-input" id="cCategory"><option value="maintenance">Maintenance</option><option value="mess">Mess</option><option value="security">Security</option><option value="general">General</option></select></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('complaintModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Complaint</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/complaints.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attendance | HostelSync Warden Portal</title>
+  <meta name="description" content="Manage and view hostel attendance" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div id="sidebar-root"></div>
+  <div id="navbar-root"></div>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h2>Attendance Tracking</h2>
+        <p>Monitor daily attendance records and biometric check-ins.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="btn btn-secondary"><span class="material-symbols-outlined">filter_list</span> Filters</button>
+        <button class="btn btn-primary" onclick="openModal('attendanceModal')"><span class="material-symbols-outlined">fact_check</span> Mark Manual</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid stats-grid-3" id="attStats" style="margin-bottom:32px">
+      <div class="stat-card stat-card-compact stat-card--primary">
+        <div class="stat-card-header"><p class="stat-card-label">Present Status</p><span class="material-symbols-outlined" style="opacity:0.2;font-size:2rem">check_circle</span></div>
+        <h3 class="stat-card-value" id="statPresent">—</h3>
+        <div class="progress-bar" style="margin-top:16px"><div class="progress-bar-fill progress-bar-fill--primary" id="barPresent" style="width:0%"></div></div>
+      </div>
+      <div class="stat-card stat-card-compact stat-card--secondary">
+        <div class="stat-card-header"><p class="stat-card-label">On Approved Leave</p><span class="material-symbols-outlined" style="opacity:0.2;font-size:2rem">luggage</span></div>
+        <h3 class="stat-card-value" id="statLeave">—</h3>
+      </div>
+      <div class="stat-card stat-card-compact stat-card--error">
+        <div class="stat-card-header"><p class="stat-card-label">Unaccounted / Absent</p><span class="material-symbols-outlined" style="opacity:0.2;font-size:2rem">warning</span></div>
+        <h3 class="stat-card-value" id="statAbsent">—</h3>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <div class="table-header">
+        <h3>Today's Roll Call</h3>
+        <div class="table-search">
+          <span class="material-symbols-outlined">search</span>
+          <input type="text" placeholder="Search student name/ID..." id="searchInput" oninput="filterAttendance()" />
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Roll Number</th>
+              <th>Room</th>
+              <th>Time Recorded</th>
+              <th>Method</th>
+              <th>Status</th>
+              <th style="text-align:right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="attTableBody">
+            <tr><td colspan="7"><div class="empty-state"><span class="material-symbols-outlined">hourglass_empty</span><h3>Loading...</h3></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Mark Manual Modal -->
+  <div class="modal-overlay" id="attendanceModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Mark Manual Attendance</h3>
+        <button onclick="closeModal('attendanceModal')"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <form onsubmit="submitAttendance(event)">
+        <div class="form-group"><label class="form-label">Student Roll Number</label><input class="form-input" id="aRoll" required /></div>
+        <div class="form-group"><label class="form-label">Status</label><select class="form-input" id="aStatus"><option value="present">Present</option><option value="absent">Absent</option></select></div>
+        <div class="form-group"><label class="form-label">Reason / Note (optional)</label><input class="form-input" id="aNote" /></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('attendanceModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/attendance.js"></script>
+</body>
+</html>

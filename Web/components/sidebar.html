@@ -1,0 +1,59 @@
+<!-- HostelSync Sidebar Component -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-icon">
+      <span class="material-symbols-outlined">domain</span>
+    </div>
+    <div class="sidebar-brand-text">
+      <h1>HostelSync</h1>
+      <p>Warden Portal</p>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="dashboard.html" data-page="dashboard">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span>Dashboard</span>
+    </a>
+    <a href="requests.html" data-page="requests">
+      <span class="material-symbols-outlined">event_available</span>
+      <span>Gate Pass Requests</span>
+    </a>
+    <a href="requests.html?type=leave" data-page="leave">
+      <span class="material-symbols-outlined">exit_to_app</span>
+      <span>Leave Requests</span>
+    </a>
+    <a href="complaints.html" data-page="complaints">
+      <span class="material-symbols-outlined">report_problem</span>
+      <span>Complaints</span>
+    </a>
+    <a href="visitors.html" data-page="visitors">
+      <span class="material-symbols-outlined">group_add</span>
+      <span>Visitors</span>
+    </a>
+    <a href="attendance.html" data-page="attendance">
+      <span class="material-symbols-outlined">fact_check</span>
+      <span>Attendance</span>
+    </a>
+    <a href="voting.html" data-page="voting">
+      <span class="material-symbols-outlined">how_to_vote</span>
+      <span>Mess Voting</span>
+    </a>
+    <a href="#" data-page="students">
+      <span class="material-symbols-outlined">person_search</span>
+      <span>Students</span>
+    </a>
+    <a href="#" data-page="notifications">
+      <span class="material-symbols-outlined">notifications</span>
+      <span>Notifications</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="api.logout()">
+      <span class="material-symbols-outlined">logout</span>
+      <span>Logout</span>
+    </button>
+  </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>

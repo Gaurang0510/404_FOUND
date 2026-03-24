@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pymongo import MongoClient
 from passlib.context import CryptContext
@@ -13,7 +14,19 @@ import string
 
 app = FastAPI()
 
+<<<<<<< HEAD
 SECRET_KEY = "zxc"
+=======
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+SECRET_KEY = "B&w1X9+)NiJaQ3Cbe&1f4x*Ey==,DFy*V=gKbaXmMvawR967&.*XpAS%cTzKmM:R%9P5i9VX2Lv7_%)6*0pN]1x/$G=ng@_!&hJWKa(?*V[Byb?cZX/$uKatyqRWWdZr"
+>>>>>>> 79b27fe (web full)
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 24 * 365 * 10
 

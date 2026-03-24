@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | HostelSync Warden Portal</title>
+  <meta name="description" content="HostelSync Warden Dashboard – Real-time hostel oversight" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div id="sidebar-root"></div>
+  <div id="navbar-root"></div>
+
+  <main class="main-content">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h2>Hostel Insight</h2>
+        <p>Real-time occupancy and request oversight for Block A &amp; B.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="btn btn-secondary">
+          <span class="material-symbols-outlined">filter_list</span> Generate Report
+        </button>
+        <button class="btn btn-primary">Quick Action</button>
+      </div>
+    </div>
+
+    <!-- Bento Grid Summary Cards -->
+    <div class="stats-grid stats-grid-6" id="statsGrid">
+      <!-- Total Students -->
+      <div class="stat-card stat-card--primary">
+        <div class="stat-card-glow"></div>
+        <div class="stat-card-header">
+          <div class="stat-card-icon"><span class="material-symbols-outlined">school</span></div>
+          <span class="stat-card-badge" id="badgeStudents">Loading...</span>
+        </div>
+        <p class="stat-card-label">Total Students</p>
+        <h3 class="stat-card-value" id="totalStudents">—</h3>
+        <div class="stat-card-footer">
+          <div class="progress-bar"><div class="progress-bar-fill progress-bar-fill--primary" id="capacityBar" style="width:0%"></div></div>
+          <p style="margin-top:12px;font-size:0.75rem;color:var(--on-surface-variant);opacity:0.7;font-style:italic" id="capacityText">Loading capacity...</p>
+        </div>
+      </div>
+      <!-- Pending Gate Pass -->
+      <div class="stat-card stat-card--tertiary">
+        <div class="stat-card-glow"></div>
+        <div class="stat-card-header">
+          <div class="stat-card-icon"><span class="material-symbols-outlined">pending_actions</span></div>
+          <span class="stat-card-badge"><span class="status-dot" style="background:var(--tertiary);box-shadow:0 0 8px #e3c193;width:8px;height:8px;border-radius:50%;display:inline-block"></span> Action Needed</span>
+        </div>
+        <p class="stat-card-label">Pending Gate Pass</p>
+        <h3 class="stat-card-value" id="pendingGatePass">—</h3>
+        <div class="stat-card-footer" style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm" style="flex:1" onclick="window.location.href='requests.html'">Review All</button>
+          <button class="btn btn-secondary btn-sm" style="flex:1">Bulk Approve</button>
+        </div>
+      </div>
+      <!-- Leave Requests -->
+      <div class="stat-card stat-card--secondary">
+        <div class="stat-card-glow"></div>
+        <div class="stat-card-header">
+          <div class="stat-card-icon"><span class="material-symbols-outlined">luggage</span></div>
+          <span class="stat-card-badge" id="badgeLeave">Loading...</span>
+        </div>
+        <p class="stat-card-label">Leave Requests</p>
+        <h3 class="stat-card-value" id="leaveRequests">—</h3>
+        <div class="stat-card-footer" id="leaveBreakdown" style="display:flex;flex-direction:column;gap:12px"></div>
+      </div>
+      <!-- Attendance Today -->
+      <div class="stat-card stat-card--primary">
+        <div class="stat-card-glow"></div>
+        <div class="stat-card-header">
+          <div class="stat-card-icon"><span class="material-symbols-outlined">how_to_reg</span></div>
+          <span class="stat-card-badge">Normal Range</span>
+        </div>
+        <p class="stat-card-label">Attendance Today</p>
+        <h3 class="stat-card-value" id="attendancePercent">—</h3>
+        <div class="stat-card-footer" style="display:flex;align-items:center;gap:16px">
+          <div class="progress-bar" style="flex:1"><div class="progress-bar-fill progress-bar-fill--primary" id="attendanceBar" style="width:0%"></div></div>
+          <span style="font-size:0.75rem;color:var(--on-surface-variant);font-weight:700" id="presentCount">—</span>
+        </div>
+      </div>
+      <!-- Active Complaints -->
+      <div class="stat-card stat-card--error">
+        <div class="stat-card-glow"></div>
+        <div class="stat-card-header">
+          <div class="stat-card-icon"><span class="material-symbols-outlined">emergency_home</span></div>
+          <span class="stat-card-badge" id="badgeComplaints">Loading...</span>
+        </div>
+        <p class="stat-card-label">Active Complaints</p>
+        <h3 class="stat-card-value" id="activeComplaints">—</h3>
+        <p class="stat-card-footer" style="font-size:0.75rem;color:var(--on-surface-variant)" id="complaintIssues">Loading...</p>
+      </div>
+      <!-- Visitors Today -->
+      <div class="stat-card stat-card--tertiary">
+        <div class="stat-card-glow"></div>
+        <div class="stat-card-header">
+          <div class="stat-card-icon"><span class="material-symbols-outlined">meeting_room</span></div>
+          <span class="stat-card-badge" id="badgeVisitors">Loading...</span>
+        </div>
+        <p class="stat-card-label">Visitors Today</p>
+        <h3 class="stat-card-value" id="visitorsToday">—</h3>
+        <div class="stat-card-footer">
+          <div class="avatar-stack" id="visitorAvatars"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity Section -->
+    <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:32px">
+      <!-- Recent Pass Activity -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <h4>Recent Pass Activity</h4>
+          <a href="requests.html">View All</a>
+        </div>
+        <div class="activity-list" id="recentActivity">
+          <div class="empty-state"><span class="material-symbols-outlined">hourglass_empty</span><h3>Loading...</h3></div>
+        </div>
+      </div>
+      <!-- Maintenance Pulse -->
+      <div class="section-card" style="position:relative;overflow:hidden">
+        <div style="position:absolute;inset:0;opacity:0.1;pointer-events:none;background-image:radial-gradient(circle at 80% 20%,#adc6ff 0%,transparent 40%)"></div>
+        <div class="section-card-header" style="position:relative;z-index:1">
+          <h4>Maintenance Pulse</h4>
+          <span style="padding:8px;background:rgba(255,180,171,0.1);border-radius:50%;color:var(--error)">
+            <span class="material-symbols-outlined" style="font-size:0.875rem">warning</span>
+          </span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;position:relative;z-index:1" id="maintenanceList">
+          <div class="empty-state"><span class="material-symbols-outlined">hourglass_empty</span><h3>Loading...</h3></div>
+        </div>
+        <button class="btn btn-secondary" style="width:100%;margin-top:24px;justify-content:center;border:1px solid rgba(69,70,77,0.2);position:relative;z-index:1">
+          View Maintenance Log
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- FAB -->
+  <button class="fab" title="Quick Action">
+    <span class="material-symbols-outlined">add</span>
+  </button>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HostelSync – Warden Login</title>
+  <meta name="description" content="HostelSync Warden Portal – Secure login for hostel management" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-card">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">
+          <span class="material-symbols-outlined">domain</span>
+        </div>
+        <div class="sidebar-brand-text">
+          <h1>HostelSync</h1>
+          <p>Warden Portal</p>
+        </div>
+      </div>
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Sign in to manage your hostel operations</p>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input class="form-input" type="email" id="email" placeholder="warden@hostelsync.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input class="form-input" type="password" id="password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn-primary" id="loginBtn">
+          <span class="material-symbols-outlined">login</span>
+          Sign In
+        </button>
+      </form>
+
+      <p style="text-align:center;margin-top:24px;font-size:0.8rem;color:var(--on-surface-variant)">
+        HostelSync v1.0 – Nocturnal Concierge
+      </p>
+    </div>
+  </div>
+
+  <script src="assets/js/api_service.js"></script>
+  <script>
+    // If already logged in, redirect
+    if (api.isAuthenticated()) {
+      window.location.href = 'dashboard.html';
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const btn = document.getElementById('loginBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="material-symbols-outlined">hourglass_empty</span> Signing in...';
+
+      try {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        await api.login(email, password);
+        window.location.href = 'dashboard.html';
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = '<span class="material-symbols-outlined">login</span> Sign In';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gate Pass Requests | HostelSync</title>
+  <meta name="description" content="Manage gate pass and leave requests" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div id="sidebar-root"></div>
+  <div id="navbar-root"></div>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h2 id="pageTitle">Gate Pass Management</h2>
+        <p id="pageDesc">Review and manage student gate pass requests in real-time.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="btn btn-secondary" onclick="toggleLeaveView()">
+          <span class="material-symbols-outlined">swap_horiz</span>
+          <span id="toggleLabel">Switch to Leave Requests</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid stats-grid-4" id="requestStats">
+      <div class="stat-card stat-card-compact stat-card--tertiary">
+        <div class="stat-card-header"><p class="stat-card-label">Pending Today</p><span class="material-symbols-outlined" style="font-size:2rem;opacity:0.1">pending_actions</span></div>
+        <h3 class="stat-card-value" id="statPending" style="color:var(--tertiary)">—</h3>
+      </div>
+      <div class="stat-card stat-card-compact stat-card--primary">
+        <div class="stat-card-header"><p class="stat-card-label">Approved</p><span class="material-symbols-outlined" style="font-size:2rem;opacity:0.1">check_circle</span></div>
+        <h3 class="stat-card-value" id="statApproved" style="color:var(--primary)">—</h3>
+      </div>
+      <div class="stat-card stat-card-compact stat-card--error">
+        <div class="stat-card-header"><p class="stat-card-label">Late Returns</p><span class="material-symbols-outlined" style="font-size:2rem;opacity:0.1">alarm</span></div>
+        <h3 class="stat-card-value" id="statLate" style="color:var(--error)">—</h3>
+      </div>
+      <div class="stat-card stat-card-compact">
+        <div class="stat-card-header"><p class="stat-card-label">Total Active</p><span class="material-symbols-outlined" style="font-size:2rem;opacity:0.1">directions_run</span></div>
+        <h3 class="stat-card-value" id="statActive">—</h3>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container" style="margin-top:32px">
+      <div class="table-header">
+        <h3>Recent Requests</h3>
+        <div class="table-header-actions">
+          <div class="table-search">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text" placeholder="Search students..." id="searchInput" oninput="filterRequests()" />
+          </div>
+          <button class="btn btn-secondary btn-sm">
+            <span class="material-symbols-outlined" style="font-size:0.875rem">filter_list</span> Filters
+          </button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Room</th>
+              <th>Exit Time</th>
+              <th>Return Time</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th style="text-align:right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="requestsTableBody">
+            <tr><td colspan="7"><div class="empty-state"><span class="material-symbols-outlined">hourglass_empty</span><h3>Loading...</h3></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </main>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/requests.js"></script>
+</body>
+</html>

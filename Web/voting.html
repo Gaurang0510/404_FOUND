@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mess Voting | HostelSync Warden Portal</title>
+  <meta name="description" content="Manage mess menu voting and polls" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div id="sidebar-root"></div>
+  <div id="navbar-root"></div>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h2>Mess Menu Voting</h2>
+        <p>Manage weekly menu polls and view student preferences.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="btn btn-primary" onclick="openModal('pollModal')"><span class="material-symbols-outlined">add_box</span> Create New Poll</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:32px">
+      <!-- Active Poll Results -->
+      <div class="section-card">
+        <div class="section-card-header">
+          <h4>Active Poll: specific Menu</h4>
+          <span class="status-chip status-chip--in-progress"><span class="status-dot"></span> Live</span>
+        </div>
+        <p style="color:var(--on-surface-variant);font-size:0.875rem;margin-bottom:24px" id="activePollDesc">Loading poll data...</p>
+        <div id="pollResults">
+          <div class="empty-state"><span class="material-symbols-outlined">how_to_vote</span><p>No active polls</p></div>
+        </div>
+        <div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(69,70,77,0.2);display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:0.875rem"><strong style="color:var(--on-surface)" id="totalVotes">0</strong><span style="color:var(--on-surface-variant)"> Total Votes</span></div>
+          <button class="btn btn-secondary btn-sm">End Poll Now</button>
+        </div>
+      </div>
+
+      <!-- Previous Polls -->
+      <div class="section-card">
+        <div class="section-card-header"><h4>Recent Polls</h4></div>
+        <div class="activity-list" id="pastPolls">
+           <div class="empty-state"><span class="material-symbols-outlined">history</span><p>No past polls found</p></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Create Poll Modal -->
+  <div class="modal-overlay" id="pollModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Create New Poll</h3>
+        <button onclick="closeModal('pollModal')"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <form onsubmit="submitPoll(event)">
+        <div class="form-group"><label class="form-label">Poll Title</label><input class="form-input" id="pTitle" placeholder="e.g. Next Week Dinner Menu" required /></div>
+        <div class="form-group"><label class="form-label">Description</label><input class="form-input" id="pDesc" /></div>
+        <div class="form-group"><label class="form-label">Options (comma separated)</label><input class="form-input" id="pOptions" placeholder="Dosa, Chole Bhature, Paneer Butter Masala" required /></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('pollModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Publish Poll</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/voting.js"></script>
+</body>
+</html>

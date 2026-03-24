@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visitors | HostelSync Warden Portal</title>
+  <meta name="description" content="Manage external visitors in the hostel" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div id="sidebar-root"></div>
+  <div id="navbar-root"></div>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h2>Visitor Log</h2>
+        <p>Track external visitors and parent meetings across the campus.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="btn btn-primary" onclick="openModal('visitorModal')">
+          <span class="material-symbols-outlined">person_add</span> Register Visitor
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid stats-grid-3" id="visitorStats" style="margin-bottom:32px">
+      <div class="stat-card stat-card-compact stat-card--primary">
+        <div class="stat-card-header"><p class="stat-card-label">Active on Campus</p><span class="material-symbols-outlined" style="opacity:0.2;font-size:2rem">front_hand</span></div>
+        <h3 class="stat-card-value" id="statActiveVis">—</h3>
+      </div>
+      <div class="stat-card stat-card-compact stat-card--tertiary">
+        <div class="stat-card-header"><p class="stat-card-label">Total Today</p><span class="material-symbols-outlined" style="opacity:0.2;font-size:2rem">groups</span></div>
+        <h3 class="stat-card-value" id="statTotalVis">—</h3>
+      </div>
+      <div class="stat-card stat-card-compact stat-card--error">
+        <div class="stat-card-header"><p class="stat-card-label">Overstayed</p><span class="material-symbols-outlined" style="opacity:0.2;font-size:2rem">timer</span></div>
+        <h3 class="stat-card-value" id="statOverstayVis">—</h3>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <div class="table-header">
+        <h3>Visitor Records</h3>
+        <div class="table-search">
+          <span class="material-symbols-outlined">search</span>
+          <input type="text" placeholder="Search visitors or host..." id="searchInput" oninput="filterVisitors()" />
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Visitor Name</th>
+              <th>Host Student</th>
+              <th>Purpose</th>
+              <th>Check In</th>
+              <th>Check Out</th>
+              <th>Status</th>
+              <th style="text-align:right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="visitorTableBody">
+            <tr><td colspan="7"><div class="empty-state"><span class="material-symbols-outlined">hourglass_empty</span><h3>Loading...</h3></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Register Visitor Modal -->
+  <div class="modal-overlay" id="visitorModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Register New Visitor</h3>
+        <button onclick="closeModal('visitorModal')"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <form onsubmit="submitVisitor(event)">
+        <div class="form-group"><label class="form-label">Visitor Name</label><input class="form-input" id="vName" required /></div>
+        <div class="form-group"><label class="form-label">Contact Number</label><input class="form-input" id="vPhone" type="tel" required /></div>
+        <div class="form-group"><label class="form-label">Student Visited (Roll Number)</label><input class="form-input" id="vStudent" required /></div>
+        <div class="form-group"><label class="form-label">Purpose</label><input class="form-input" id="vPurpose" required /></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('visitorModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Grant Entry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/api_service.js"></script>
+  <script src="assets/js/components.js"></script>
+  <script src="assets/js/visitors.js"></script>
+</body>
+</html>
